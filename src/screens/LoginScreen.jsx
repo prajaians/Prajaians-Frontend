@@ -116,9 +116,9 @@ const LoginScreen = () => {
       if (user.role === 'staff') {
         navigate('/staffPanel', { replace: true })
       } else if (user.role === 'manager') {
-        navigate('/dashboard', { replace: true })
+        navigate('/managerPanel', { replace: true })
       } else if(user.role === 'admin'){
-         navigate('/dashboard', { replace: true })
+         navigate('/adminPanel', { replace: true })
       } else {
         navigate('/login', { replace: true })
       }

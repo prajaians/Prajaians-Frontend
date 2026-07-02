@@ -7,6 +7,7 @@ import LoginScreen from './screens/LoginScreen'
 
 // Staff Screens
 import StaffDashboard from './screens/StaffDashboard'
+import ManagerEntry from './screens/ManagerEntry'
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
 
           {/* Staff Routes */}
           <Route path='/staffPanel/*' element={<StaffDashboard />} />
+
+          {/* Manager Routes */}
+          <Route path='/managerPanel/*' element={<ManagerEntry />} />
+
 
           {/* 404 - Not Found */}
           <Route path='*' element={<h1 className="text-center text-4xl text-gold-primary mt-20">404 - Page Not Found</h1>} />

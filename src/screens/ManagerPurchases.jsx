@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import html2pdf from 'html2pdf.js'
 
-const StaffPurchases = () => {
+const ManagerPurchases = () => {
   const navigate = useNavigate()
   const [purchases, setPurchases] = useState([])
   const [loading, setLoading] = useState(true)
@@ -32,7 +32,7 @@ const StaffPurchases = () => {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/staff/viewAllPurchase`,
+        `${import.meta.env.VITE_API_URL}/manager/viewAllPurchase`,
         { headers: { token } }
       )
       if (response.data.status === 'SUCCESS') {
@@ -58,7 +58,7 @@ const StaffPurchases = () => {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/staff/viewAllIngredient`,
+        `${import.meta.env.VITE_API_URL}/manager/viewAllIngredient`,
         { headers: { token } }
       )
       if (response.data.status === 'SUCCESS') {
@@ -74,7 +74,7 @@ const StaffPurchases = () => {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/staff/viewAllVendor`,
+        `${import.meta.env.VITE_API_URL}/manager/viewAllVendor`,
         { headers: { token } }
       )
       if (response.data.status === 'SUCCESS') {
@@ -153,11 +153,6 @@ const StaffPurchases = () => {
     
     return matchesSearch && matchesVendor && matchesIngredient && matchesDate
   })
-
-  // Navigate to Add Purchase
-  const handleAddPurchase = () => {
-    navigate('/staffPanel/purchases/add')
-  }
 
   // Get unique vendor names for filter
   const uniqueVendors = [...new Set(purchases.map(p => p.vendorName).filter(Boolean))]
@@ -594,7 +589,7 @@ const StaffPurchases = () => {
 
     const items = purchase.purchaseItems || []
     
-    // Proper CSV headers matching table columns
+    // Proper CSV headers matching table columns with dark green
     let csvContent = 'S.No,Ingredient Name,Batch Number,Quantity,Unit,Unit Price (₹),Total (₹)\n'
     
     items.forEach((item, index) => {
@@ -620,7 +615,7 @@ const StaffPurchases = () => {
     URL.revokeObjectURL(url)
   }
 
-  // Export All to Excel with proper headings
+  // Export All to Excel with proper headings and dark green header
   const handleExportAllExcel = () => {
     if (filteredPurchases.length === 0) {
       setError('No data to export')
@@ -699,16 +694,6 @@ const StaffPurchases = () => {
             Manage your purchase ledger and inventory
           </p>
         </div>
-        <button
-          type="button"
-          onClick={handleAddPurchase}
-          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#c9a962] to-[#9a7b4f] text-[#0a0805] font-bold text-sm rounded-xl hover:shadow-lg hover:shadow-[#c9a962]/25 transition-all duration-300 cursor-pointer"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-          </svg>
-          Add Purchase
-        </button>
       </div>
 
       {/* Search and Filter Card */}
@@ -856,7 +841,7 @@ const StaffPurchases = () => {
           <p className="text-sm mt-1">
             {searchTerm || filterIngredient || filterVendor || filterFromDate || filterToDate 
               ? 'Try adjusting your search or filters' 
-              : 'Create your first purchase order to get started'}
+              : 'No purchase records available.'}
           </p>
         </div>
       ) : (
@@ -1060,4 +1045,4 @@ const StaffPurchases = () => {
   )
 }
 
-export default StaffPurchases
+export default ManagerPurchases
