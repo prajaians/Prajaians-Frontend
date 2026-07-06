@@ -23,6 +23,8 @@ import EditRecipe from './EditRecipe'
 import StaffPurchases from './StaffPurchases'
 import AddPurchase from './AddPurchase'
 import StaffStock from './StaffStock'
+import StaffSales from './StaffSales'
+import AddSales from './AddSales'
 
 // ── Icons ──────────────────────────────────────────────────────────────────
 const Icons = {
@@ -159,6 +161,7 @@ const getEntityType = (path) => {
   if (path.includes('/stock')) return 'stock'
   if (path.includes('/purchases')) return 'purchase'
   if (path.includes('/categories')) return 'category'
+  if (path.includes('/sales')) return 'sales'
   return null
 }
 
@@ -247,7 +250,7 @@ const StaffPanel = () => {
       toggle: () => setSalesOpen(!salesOpen),
       items: [
         { id: 'purchases', label: 'Purchases', icon: Icons.Purchases },
-        { id: 'salesReport', label: 'Sales Report', icon: Icons.Sales },
+        { id: 'sales', label: 'Sales Report', icon: Icons.Sales },
       ]
     }
   ]
@@ -294,6 +297,8 @@ const StaffPanel = () => {
              return <AddRecipe />
           case 'purchase':
              return <AddPurchase />
+          case 'sales':
+               return <AddSales />
           default:            
              return <AddCategory />
         }
@@ -338,12 +343,8 @@ const StaffPanel = () => {
           return <StaffRecipes />
         case 'purchases':
           return <StaffPurchases />
-        case 'salesReport':
-          return (
-            <div className="text-center py-16 text-[#998f82]">
-              <p className="text-lg capitalize">{activeTab.replace(/([A-Z])/g, ' $1')} — Coming soon</p>
-            </div>
-          )
+        case 'sales':
+               return <StaffSales />
         default:
           return <DashboardStaff onNavigate={handleTabChange} />
       }

@@ -14,6 +14,7 @@ import ManagerPurchases from './ManagerPurchases'
 import ManagerStaff from './ManagerStaff'
 import ManagerReports from './ManagerReports'
 import ManagerStocks from './ManagerStocks'
+import ManagerSales from './ManagerSales'
 
 // Icons as SVG components
 const Icons = {
@@ -319,8 +320,8 @@ const ManagerPanel = () => {
           return <ManagerStaff />
         case 'purchases':
           return <ManagerPurchases />
-        case 'sales':
-          return <div className="text-center py-12 text-[#998f82]">Sales - Coming soon</div>
+       case 'sales':
+            return <ManagerSales />
         case 'reports':
           return <ManagerReports />
         default:

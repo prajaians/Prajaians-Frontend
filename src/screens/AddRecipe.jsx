@@ -155,6 +155,18 @@ const AddRecipe = () => {
     return `${quantity} ${unit}`
   }
 
+  // The fixed base unit that a recipe item's stored `quantity` is always
+  // normalized to, based on the ingredient's category - "g" for weight
+  // ingredients (kg/g/mg), "ml" for volume ingredients (ltr/ml), "pcs" for
+  // count ingredients. This is what actually gets persisted to the backend
+  // alongside quantity, so stock deduction can convert correctly later.
+  const getBaseUnit = (ingredientUnit) => {
+    if (ingredientUnit === 'pcs') return 'pcs'
+    if (ingredientUnit === 'kg' || ingredientUnit === 'g') return 'g'
+    if (ingredientUnit === 'ltr' || ingredientUnit === 'ml') return 'ml'
+    return ingredientUnit
+  }
+
   // Get available units based on ingredient's unit
   const getAvailableUnits = (ingredientUnit) => {
     if (ingredientUnit === 'pcs') {
@@ -280,6 +292,7 @@ const AddRecipe = () => {
     const ingredientUnit = ingredient?.unit || 'g'
     
     const baseQuantity = convertToBaseUnit(quantityValue, unit, ingredientUnit)
+    const baseUnit = getBaseUnit(ingredientUnit)
     const cost = calculateIngredientCost(baseQuantity, ingredientUnit, ingredient?.costPrice || 0)
     const displayStr = formatDisplayQuantity(quantityValue, unit, ingredientUnit)
 
@@ -293,9 +306,10 @@ const AddRecipe = () => {
         {
           ingredientId: currentIngredient.ingredientId,
           quantity: baseQuantity,
+          baseUnit: baseUnit, // g/ml/pcs - the unit `quantity` is actually expressed in, sent to the backend
           displayQuantity: displayStr,
           ingredientName: ingredient?.ingredientName || 'Unknown',
-          unit: ingredientUnit,
+          unit: ingredientUnit, // ingredient's own current stock unit - used only for the ₹/unit cost display below
           costPrice: ingredient?.costPrice || 0,
           cost: Math.round(cost * 100) / 100,
           originalQuantity: quantityValue,
@@ -384,7 +398,8 @@ const AddRecipe = () => {
       
       const itemsToSend = formData.recipeItems.map(item => ({
         ingredientId: item.ingredientId,
-        quantity: item.quantity
+        quantity: item.quantity,
+        unit: item.baseUnit
       }))
       formDataToSend.append('recipeItems', JSON.stringify(itemsToSend))
       

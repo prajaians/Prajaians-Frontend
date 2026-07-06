@@ -2,6 +2,102 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
+// Helper function to format quantity with units
+const formatQuantity = (quantity, unit) => {
+  if (!quantity || quantity === 0) return `0 ${unit}`
+  
+  const num = Number(quantity)
+  
+  switch (unit) {
+    case 'kg':
+      // Display as 9 kg 870 g
+      const kgs = Math.floor(num)
+      const grams = Math.round((num - kgs) * 1000)
+      if (kgs === 0) return `${grams} g`
+      if (grams === 0) return `${kgs} kg`
+      return `${kgs} kg ${grams} g`
+    
+    case 'g':
+      if (num >= 1000) {
+        const kgs = Math.floor(num / 1000)
+        const grams = Math.round(num % 1000)
+        if (grams === 0) return `${kgs} kg`
+        return `${kgs} kg ${grams} g`
+      }
+      return `${num} g`
+    
+    case 'ltr':
+      if (num >= 1) {
+        const liters = Math.floor(num)
+        const ml = Math.round((num - liters) * 1000)
+        if (liters === 0) return `${ml} ml`
+        if (ml === 0) return `${liters} L`
+        return `${liters} L ${ml} ml`
+      }
+      return `${Math.round(num * 1000)} ml`
+    
+    case 'ml':
+      if (num >= 1000) {
+        const liters = Math.floor(num / 1000)
+        const ml = Math.round(num % 1000)
+        if (ml === 0) return `${liters} L`
+        return `${liters} L ${ml} ml`
+      }
+      return `${num} ml`
+    
+    case 'pcs':
+      return `${num} pcs`
+    
+    default:
+      return `${num} ${unit}`
+  }
+}
+
+// Helper to format quantity for display in table (compact)
+const formatQuantityCompact = (quantity, unit) => {
+  if (!quantity || quantity === 0) return `0 ${unit}`
+  const num = Number(quantity)
+  
+  switch (unit) {
+    case 'kg':
+      if (num >= 1) {
+        const kgs = Math.floor(num)
+        const grams = Math.round((num - kgs) * 1000)
+        if (grams === 0) return `${kgs} kg`
+        return `${kgs} kg ${grams}g`
+      }
+      return `${Math.round(num * 1000)} g`
+    case 'g':
+      if (num >= 1000) {
+        const kgs = Math.floor(num / 1000)
+        const grams = Math.round(num % 1000)
+        if (grams === 0) return `${kgs} kg`
+        return `${kgs} kg ${grams}g`
+      }
+      return `${num} g`
+    case 'ltr':
+      if (num >= 1) {
+        const liters = Math.floor(num)
+        const ml = Math.round((num - liters) * 1000)
+        if (ml === 0) return `${liters} L`
+        return `${liters} L ${ml}ml`
+      }
+      return `${Math.round(num * 1000)} ml`
+    case 'ml':
+      if (num >= 1000) {
+        const liters = Math.floor(num / 1000)
+        const ml = Math.round(num % 1000)
+        if (ml === 0) return `${liters} L`
+        return `${liters} L ${ml}ml`
+      }
+      return `${num} ml`
+    case 'pcs':
+      return `${num} pcs`
+    default:
+      return `${num} ${unit}`
+  }
+}
+
 const ManagerStocks = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
@@ -54,7 +150,6 @@ const ManagerStocks = () => {
           updatedCount: response.data.data?.updatedCount || 0,
           updates: response.data.data?.updates || []
         })
-        console.log('Batch status update result:', response.data)
       } else {
         setBatchUpdateResult({
           success: false,
@@ -79,41 +174,32 @@ const ManagerStocks = () => {
     try {
       const token = localStorage.getItem('token')
       
-      // First update batch statuses
       await updateBatchStatuses()
       
-      // Then fetch stock data
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/manager/viewStock`,
         { headers: { token } }
       )
-
-      console.log('Full API Response:', response.data)
 
       if (response.data.status === 'SUCCESS') {
         const data = response.data.data
         const stockList = data.stockData || []
         const summaryData = data.summary || {}
         
-        // Process stock data
         const processedStock = stockList.map(item => {
           const batches = item.batches || []
           
-          // Separate active and expired batches
           const activeBatches = batches.filter(batch => batch.batchStatus !== 'EXPIRED')
           const expiredBatches = batches.filter(batch => batch.batchStatus === 'EXPIRED' && batch.remainingQuantity > 0)
           
-          // Calculate total quantity from ACTIVE batches only
           const totalActiveQuantity = activeBatches.reduce((sum, batch) => sum + (batch.remainingQuantity || 0), 0)
           const totalExpiredQuantity = expiredBatches.reduce((sum, batch) => sum + (batch.remainingQuantity || 0), 0)
           const totalCost = activeBatches.reduce((sum, batch) => sum + (batch.totalCost || 0), 0)
           
-          // Check if any active batch exists
           const hasActiveBatch = activeBatches.length > 0
           const hasExpiredBatch = expiredBatches.length > 0
           const allExpired = batches.length > 0 && activeBatches.length === 0 && expiredBatches.length > 0
           
-          // Determine stock status
           let stockStatus = item.stockStatus || 'In Stock'
           
           if (allExpired) {
@@ -137,13 +223,14 @@ const ManagerStocks = () => {
             hasActiveBatch: hasActiveBatch,
             hasExpiredBatch: hasExpiredBatch,
             allExpired: allExpired,
-            stockStatus: stockStatus
+            stockStatus: stockStatus,
+            // Store original purchase quantity (sum of all batch quantities)
+            totalPurchasedQuantity: batches.reduce((sum, batch) => sum + (batch.quantity || 0), 0)
           }
         })
         
         setStockData(processedStock)
         
-        // Calculate summary
         const total = processedStock.length
         const inStock = processedStock.filter(item => item.stockStatus === 'In Stock').length
         const lowStock = processedStock.filter(item => item.stockStatus === 'Low Stock').length
@@ -169,9 +256,6 @@ const ManagerStocks = () => {
         const uniqueBrands = [...new Set(stockList.map(item => item.brandName))].filter(Boolean)
         setCategories(uniqueCategories)
         setBrands(uniqueBrands)
-        
-        console.log('Processed Stock Data:', processedStock)
-        console.log('Summary:', summary)
       } else {
         setError(response.data.message || 'Failed to fetch stock data')
       }
@@ -193,17 +277,14 @@ const ManagerStocks = () => {
     fetchStockData()
   }, [])
 
-  // Handle refresh
   const handleRefresh = async () => {
     await fetchStockData()
   }
 
-  // Dismiss notification
   const dismissNotification = () => {
     setBatchUpdateResult(null)
   }
 
-  // Toggle expand
   const toggleExpand = (id) => {
     setExpandedItems(prev => ({
       ...prev,
@@ -211,12 +292,10 @@ const ManagerStocks = () => {
     }))
   }
 
-  // Check if an item has any expired batches with quantity > 0
   const hasExpiredBatchWithQuantity = (item) => {
     return item.expiredBatches && item.expiredBatches.length > 0
   }
 
-  // Filter stock data
   const filteredStock = stockData.filter(item => {
     const searchMatch = 
       item.ingredientName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -227,7 +306,6 @@ const ManagerStocks = () => {
     const categoryMatch = filterCategory ? item.categoryName === filterCategory : true
     const brandMatch = filterBrand ? item.brandName === filterBrand : true
     
-    // Status filter logic
     let statusMatch = true
     if (filterStatus) {
       if (filterStatus === 'Expired') {
@@ -240,7 +318,6 @@ const ManagerStocks = () => {
     return searchMatch && categoryMatch && brandMatch && statusMatch
   })
 
-  // Get status styling
   const getStatusBg = (status) => {
     const colors = {
       'In Stock': 'bg-green-500/10 border-green-500/30',
@@ -281,7 +358,6 @@ const ManagerStocks = () => {
     return colors[status] || 'linear-gradient(to bottom, #6b7280, #4b5563, #374151)'
   }
 
-  // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -291,7 +367,6 @@ const ManagerStocks = () => {
     }).format(amount || 0)
   }
 
-  // Format date
   const formatDate = (date) => {
     if (!date) return '-'
     return new Date(date).toLocaleDateString('en-IN', {
@@ -333,7 +408,7 @@ const ManagerStocks = () => {
         </button>
       </div>
 
-      {/* Batch Update Result Notification - Auto Dismiss */}
+      {/* Batch Update Result Notification */}
       {batchUpdateResult && (
         <div className={`mb-4 p-4 rounded-xl border relative ${
           batchUpdateResult.success 
@@ -360,7 +435,6 @@ const ManagerStocks = () => {
               </svg>
             </button>
           </div>
-          {/* Progress bar for auto-dismiss */}
           <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-current opacity-20">
             <div 
               className="h-full bg-current opacity-60 rounded-full transition-all duration-[5000ms] ease-linear"
@@ -567,13 +641,25 @@ const ManagerStocks = () => {
                           <span className="break-words">{item.brandName}</span>
                         </span>
 
-                        {/* Unit & Quantity */}
+                        {/* Unit & Quantity - Display with proper formatting */}
                         <span className="text-sm text-[#998f82] flex items-center gap-2 group-hover:text-[#c5b7a2] transition-colors duration-300">
                           <svg className="w-4 h-4 text-[#8b7355] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2v4M12 22v-4M4 12H2M22 12h-2M19.07 4.93l-2.83 2.83M6.34 17.66l-2.83 2.83M17.66 17.66l2.83 2.83M4.93 4.93l2.83 2.83" />
                             <circle cx="12" cy="12" r="4" />
                           </svg>
-                          <span className="break-words">{item.totalQuantity} {item.unit}</span>
+                          <span className="break-words">
+                            Stock: {formatQuantityCompact(item.totalQuantity, item.unit)}
+                          </span>
+                        </span>
+
+                        {/* Purchased Quantity */}
+                        <span className="text-sm text-[#8b7355] flex items-center gap-2">
+                          <svg className="w-4 h-4 text-[#8b7355] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3v18h18M3 15l4-4 4 4 8-8" />
+                          </svg>
+                          <span className="break-words">
+                            Purchased: {formatQuantityCompact(item.totalPurchasedQuantity || 0, item.unit)}
+                          </span>
                         </span>
 
                         {/* Cost Price */}
@@ -660,8 +746,9 @@ const ManagerStocks = () => {
                                     <span className="text-xs text-[#8b7355]">(Empty)</span>
                                   )}
                                 </div>
-                                <div className="flex items-center gap-4 text-xs text-[#8b7355]">
-                                  <span>Qty: {batch.remainingQuantity || 0}</span>
+                                <div className="flex items-center gap-4 text-xs text-[#8b7355] flex-wrap">
+                                  <span>Purchased: {formatQuantityCompact(batch.quantity, item.unit)}</span>
+                                  <span>Remaining: {formatQuantityCompact(batch.remainingQuantity || 0, item.unit)}</span>
                                   <span>Unit Cost: ₹{batch.unitCost || 0}</span>
                                   {batch.totalCost && (
                                     <span>Total: ₹{batch.totalCost}</span>
@@ -682,7 +769,7 @@ const ManagerStocks = () => {
                                 )}
                                 {batch.manufacturingDate && (
                                   <div className="text-[10px] text-[#8b7355] mt-0.5">
-                                    Mfg Date: {formatDate(batch.manufacturingDate)}
+                                    Mfg: {formatDate(batch.manufacturingDate)}
                                   </div>
                                 )}
                               </div>
@@ -702,4 +789,4 @@ const ManagerStocks = () => {
   )
 }
 
-export default ManagerStocks;
+export default ManagerStocks
