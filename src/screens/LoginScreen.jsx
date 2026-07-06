@@ -129,7 +129,11 @@ const LoginScreen = () => {
         const message = err.response.data?.message || 'Login failed'
         
         // Handle specific error cases from your API
-        if (status === 401) {
+        if (status === 403) {
+          // Account deactivated
+          setError('Your account has been deactivated. Please contact administrator.')
+        }
+        else if (status === 401) {
           setError('Invalid email or password. Please try again.')
         } else if (status === 404) {
           setError('Account not found. Please check your email.')
@@ -159,6 +163,7 @@ const LoginScreen = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-[#0d0906] flex items-center justify-center p-4 md:p-8 font-['Manrope',sans-serif]">
+      
       
       {/* Premium Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#c9a962]/15 via-transparent to-[#9a7b4f]/15 pointer-events-none"></div>
@@ -248,16 +253,29 @@ const LoginScreen = () => {
           </div>
 
           {/* Error Message */}
-          {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-2xl animate-shake">
-              <div className="flex items-start gap-3 text-red-400">
-                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="text-sm font-medium leading-relaxed">{error}</span>
-              </div>
-            </div>
-          )}
+{/* Error Message */}
+{error && (
+  <div className={`mb-6 p-4 rounded-2xl animate-shake ${
+    error.includes('deactivated') 
+      ? 'bg-yellow-500/10 border border-yellow-500/30' 
+      : 'bg-red-500/10 border border-red-500/30'
+  }`}>
+    <div className={`flex items-start gap-3 ${
+      error.includes('deactivated') ? 'text-yellow-400' : 'text-red-400'
+    }`}>
+      {error.includes('deactivated') ? (
+        <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      ) : (
+        <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )}
+      <span className="text-sm font-medium leading-relaxed">{error}</span>
+    </div>
+  </div>
+)}
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">

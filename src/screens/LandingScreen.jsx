@@ -94,12 +94,12 @@ const LandingScreen = () => {
   };
 
   const menuItems = [
-    { name: 'CHICKEN BITES', price: '$32', description: 'Arborio rice with black truffle shavings', category: 'Signature' },
-    { name: 'WRAPS', price: '$58', description: 'A5 Japanese wagyu, grilled to perfection', category: 'Premium' },
-    { name: 'CLASSIC CHICKEN BURGER', price: '$45', description: 'Maine lobster in creamy cognac sauce', category: 'Signature' },
-    { name: 'SANDWICHES', price: '$38', description: 'Slow-cooked duck leg, apple gastrique', category: 'Chef Special' },
-    { name: 'BURGER', price: '$42', description: 'Saffron rice with fresh catch of the day', category: 'Popular' },
-    { name: 'SHAKES', price: '$36', description: 'Butternut squash, spinach, feta pastry', category: 'Vegetarian' },
+    { name: 'CHICKEN BITES', price: '₹32', description: 'Arborio rice with black truffle shavings', category: 'Signature' },
+    { name: 'WRAPS', price: '₹58', description: 'A5 Japanese wagyu, grilled to perfection', category: 'Premium' },
+    { name: 'CLASSIC CHICKEN BURGER', price: '₹45', description: 'Maine lobster in creamy cognac sauce', category: 'Signature' },
+    { name: 'SANDWICHES', price: '₹38', description: 'Slow-cooked duck leg, apple gastrique', category: 'Chef Special' },
+    { name: 'BURGER', price: '₹42', description: 'Saffron rice with fresh catch of the day', category: 'Popular' },
+    { name: 'SHAKES', price: '₹36', description: 'Butternut squash, spinach, feta pastry', category: 'Vegetarian' },
   ];
 
   const galleryImages = [
@@ -192,7 +192,7 @@ const LandingScreen = () => {
 
           <div className="nav-actions">
             <button className="btn-login" onClick={handleLoginClick}>
-              Login / Sign Up
+              SignIn
             </button>
             <button className="btn-reserve" onClick={() => scrollToSection('contact')}>
               Reserve Table

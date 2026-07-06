@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen'
 // Staff Screens
 import StaffDashboard from './screens/StaffDashboard'
 import ManagerEntry from './screens/ManagerEntry'
+import AdminPanel from './screens/AdminPanel'
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
 
           {/* Manager Routes */}
           <Route path='/managerPanel/*' element={<ManagerEntry />} />
+
+          {/* Admin Routes */}
+          <Route path="/adminPanel" element={<AdminPanel />} />
+
 
 
           {/* 404 - Not Found */}
