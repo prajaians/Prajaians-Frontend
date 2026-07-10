@@ -283,7 +283,7 @@ const ManagerSales = () => {
           .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; margin-bottom: 16px; }
           .header-left { display: flex; align-items: center; gap: 16px; }
           .logo { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; border: 1px solid #d1d5db; }
-          .brand-name { font-size: 20px; font-weight: 700; color: #1f2937; font-family: 'Playfair Display', serif; }
+          .brand-name { font-size: 15px; font-weight: 700; color: #1f2937; font-family: 'Playfair Display', serif; }
           .brand-sub { font-size: 13px; color: #6b7280; }
           .header-right { text-align: right; }
           .header-right p { font-size: 13px; color: #6b7280; margin: 2px 0; }
@@ -356,7 +356,7 @@ const ManagerSales = () => {
             <div class="header-left">
               <img src="${window.location.origin}/src/assets/logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'" />
               <div>
-                <div class="brand-name">Prajain's Resto-Cafe</div>
+                <div class="brand-name">PRAJAIAN'S Resto-Cafe</div>
                 <div class="brand-sub">Sale #${sale._id?.slice(-8) || 'N/A'}</div>
               </div>
             </div>
@@ -421,7 +421,7 @@ const ManagerSales = () => {
               <div class="signature-sub">(Signature)</div>
             </div>
             <div class="footer-right">
-              <p style="font-weight:600;">Prajain's Resto-Cafe</p>
+              <p style="font-weight:600;">PRAJAIAN'S Resto-Cafe</p>
               <p class="small">Near Shanthi Hospital, Kodakara</p>
               <p class="small">Thrissur Dt, Kerala - 680684</p>
               <p class="small">Phone: +91 85907 47379</p>

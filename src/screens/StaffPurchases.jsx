@@ -274,7 +274,7 @@ const StaffPurchases = () => {
             border: 1px solid #d1d5db; 
           }
           .brand-name { 
-            font-size: 20px; 
+            font-size: 15px; 
             font-weight: 700; 
             color: #1f2937;
             font-family: 'Playfair Display', serif;
@@ -416,7 +416,7 @@ const StaffPurchases = () => {
             <div class="header-left">
               <img src="${window.location.origin}/src/assets/logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'" />
               <div>
-                <div class="brand-name">Prajain's Resto-Cafe</div>
+                <div class="brand-name">PRAJAIAN'S Resto-Cafe</div>
                 <div class="brand-sub">Purchase Order</div>
               </div>
             </div>
@@ -495,7 +495,7 @@ const StaffPurchases = () => {
               <div class="signature-sub">(Signature)</div>
             </div>
             <div class="footer-right">
-              <p style="font-weight:600;">Prajain's Resto-Cafe</p>
+              <p style="font-weight:600;">PRAJAIAN'S Resto-Cafe</p>
               <p class="small">Near Shanthi Hospital, Kodakara</p>
               <p class="small">Thrissur Dt, Kerala - 680684</p>
               <p class="small">Phone: +91 85907 47379</p>

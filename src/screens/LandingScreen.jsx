@@ -116,7 +116,7 @@ const LandingScreen = () => {
 
   const testimonials = [
     { name: 'Sarah Mitchell', text: 'An extraordinary dining experience. The ambiance, the service, and the food are absolutely world-class.', rating: 5 },
-    { name: 'James Chen', text: 'Prajain\'s Resto-Cafe has become my go-to place for special occasions. Impeccable attention to detail.', rating: 5 },
+    { name: 'James Chen', text: 'Prajaian\'s Resto-Cafe has become my go-to place for special occasions. Impeccable attention to detail.', rating: 5 },
   ];
 
   const reservationTimeSlots = [
@@ -168,8 +168,8 @@ const LandingScreen = () => {
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
           <div className="nav-logo">
-            <img src={cafeLogo} alt="Prajain's Cafe Logo" className="logo-img" />
-            <span className="logo-text">Prajain's</span>
+            <img src={cafeLogo} alt="Prajaian's Cafe Logo" className="logo-img" />
+            <span className="logo-text">PRAJAIAN'S</span>
           </div>
 
           <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`} role="navigation" aria-label="Main navigation">

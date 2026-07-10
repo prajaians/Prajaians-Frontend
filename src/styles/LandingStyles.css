@@ -477,10 +477,10 @@ body {
 
 .logo-text {
   font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight:600;
   color: var(--text-white);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.09em;
 
 }
 

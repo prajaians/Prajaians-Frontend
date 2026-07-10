@@ -57,7 +57,7 @@ const LoginScreen = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     // Validation
     if (!email || !password) {
       setError('Please fill in all fields')
@@ -100,7 +100,7 @@ const LoginScreen = () => {
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
       localStorage.setItem('userRole', user.role)
-      
+
       if (rememberMe) {
         localStorage.setItem('rememberEmail', email)
       } else {
@@ -117,8 +117,8 @@ const LoginScreen = () => {
         navigate('/staffPanel', { replace: true })
       } else if (user.role === 'manager') {
         navigate('/managerPanel', { replace: true })
-      } else if(user.role === 'admin'){
-         navigate('/adminPanel', { replace: true })
+      } else if (user.role === 'admin') {
+        navigate('/adminPanel', { replace: true })
       } else {
         navigate('/login', { replace: true })
       }
@@ -127,7 +127,7 @@ const LoginScreen = () => {
       if (err.response) {
         const status = err.response.status
         const message = err.response.data?.message || 'Login failed'
-        
+
         // Handle specific error cases from your API
         if (status === 403) {
           // Account deactivated
@@ -163,13 +163,13 @@ const LoginScreen = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-[#0d0906] flex items-center justify-center p-4 md:p-8 font-['Manrope',sans-serif]">
-      
-      
+
+
       {/* Premium Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#c9a962]/15 via-transparent to-[#9a7b4f]/15 pointer-events-none"></div>
       <div className="absolute top-[-200px] right-[-200px] w-[500px] h-[500px] rounded-full bg-[#c9a962]/20 blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-[-200px] left-[-200px] w-[500px] h-[500px] rounded-full bg-[#785827]/20 blur-3xl pointer-events-none"></div>
-      
+
       {/* Golden Particles */}
       <div className="particles-container">
         {particles.map((particle) => (
@@ -190,7 +190,7 @@ const LoginScreen = () => {
 
       {/* Main Container */}
       <div className="relative z-10 w-full max-w-[540px]">
-        
+
         {/* Back Button - Left Top Corner */}
         <div className="flex justify-start mb-6">
           <button
@@ -206,37 +206,37 @@ const LoginScreen = () => {
 
         {/* Premium Login Card */}
         <div className="relative bg-gradient-to-br from-[#120f0c]/95 to-[#0a0805]/95 backdrop-blur-xl border border-[#c9a962]/20 rounded-3xl p-8 md:p-10 shadow-2xl shadow-black/60">
-          
+
           {/* Decorative Elements */}
           <div className="absolute top-5 left-5 w-14 h-14 border-t-2 border-l-2 border-[#c9a962]/30 rounded-tl-xl"></div>
           <div className="absolute bottom-5 right-5 w-14 h-14 border-b-2 border-r-2 border-[#c9a962]/30 rounded-br-xl"></div>
           <div className="absolute top-1/2 -right-12 w-24 h-24 border border-[#c9a962]/10 rounded-full -translate-y-1/2 pointer-events-none"></div>
           <div className="absolute top-1/2 -left-12 w-24 h-24 border border-[#c9a962]/10 rounded-full -translate-y-1/2 pointer-events-none"></div>
-          
+
           <div className="absolute inset-[1px] rounded-[27px] border border-white/5 pointer-events-none"></div>
 
           {/* Brand Header - Logo Left, Prajain's Right */}
           <div className="flex items-center gap-6 mb-8 pb-6 border-b border-[#c9a962]/10">
             {/* Logo - Left */}
             <div className="relative flex-shrink-0">
-              <div className="absolute inset-0 bg-[#c9a962]/20 blur-2xl rounded-full"></div>
+              <div className="absolute inset-0 bg-[#c9a962]/20  rounded-full"></div>
               <div className="relative w-20 h-20 rounded-2xl border-2 border-[#c9a962]/50 shadow-2xl shadow-[#c9a962]/30 overflow-hidden bg-[#f4ede2]">
-                <img 
-                  src={cafeLogo} 
-                  alt="Prajain's Cafe" 
+                <img
+                  src={cafeLogo}
+                  alt="Prajain's Cafe"
                   className="w-full h-full object-cover"
                 />
               </div>
             </div>
-            
+
             {/* Brand Text - Right */}
             <div className="flex flex-col">
-              <span className="text-3xl font-bold font-['Playfair_Display',serif] text-white tracking-wide leading-tight">
-                Prajain's
+              <span className="text-2xl font-bold font-['Playfair_Display',serif] text-white tracking-widest leading-tight">
+                PRAJAIAN'S
               </span>
               {/* Resto Cafe - Smaller Text with More Gap */}
               <div className="flex items-center gap-2 mt-3">
-                <span className="text-[6px] font-semibold text-[#c9a962] tracking-[0.2em] uppercase bg-[#c9a962]/10 px-2.5 py-0.5 rounded-full border border-[#c9a962]/20">
+                <span className="text-[7px] font-semibold text-[#c9a962] tracking-[0.2em] uppercase bg-[#c9a962]/10 px-2.5 py-0.5 rounded-full border border-[#c9a962]/20">
                   Resto Cafe | Since 2023
                 </span>
               </div>
@@ -253,33 +253,31 @@ const LoginScreen = () => {
           </div>
 
           {/* Error Message */}
-{/* Error Message */}
-{error && (
-  <div className={`mb-6 p-4 rounded-2xl animate-shake ${
-    error.includes('deactivated') 
-      ? 'bg-yellow-500/10 border border-yellow-500/30' 
-      : 'bg-red-500/10 border border-red-500/30'
-  }`}>
-    <div className={`flex items-start gap-3 ${
-      error.includes('deactivated') ? 'text-yellow-400' : 'text-red-400'
-    }`}>
-      {error.includes('deactivated') ? (
-        <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-      ) : (
-        <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      )}
-      <span className="text-sm font-medium leading-relaxed">{error}</span>
-    </div>
-  </div>
-)}
+          {/* Error Message */}
+          {error && (
+            <div className={`mb-6 p-4 rounded-2xl animate-shake ${error.includes('deactivated')
+              ? 'bg-yellow-500/10 border border-yellow-500/30'
+              : 'bg-red-500/10 border border-red-500/30'
+              }`}>
+              <div className={`flex items-start gap-3 ${error.includes('deactivated') ? 'text-yellow-400' : 'text-red-400'
+                }`}>
+                {error.includes('deactivated') ? (
+                  <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                )}
+                <span className="text-sm font-medium leading-relaxed">{error}</span>
+              </div>
+            </div>
+          )}
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            
+
             {/* Email Field */}
             <div>
               <label className="block text-[#f4ede2] text-[11px] font-extrabold mb-1.5 tracking-[0.15em] uppercase">
@@ -358,8 +356,8 @@ const LoginScreen = () => {
             {/* Options */}
             <div className="flex items-center justify-between pt-1">
               <label className="flex items-center gap-2.5 text-[#c5b7a2] text-xs cursor-pointer group">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   className="w-4 h-4 rounded border-2 border-[#c9a962]/30 bg-white/5 text-[#c9a962] focus:ring-[#c9a962]/20 focus:ring-2 cursor-pointer"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
@@ -369,8 +367,8 @@ const LoginScreen = () => {
                 </span>
               </label>
               <div className="relative">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="text-xs font-bold text-[#8b7355] hover:text-[#c9a962] transition-colors duration-300 uppercase tracking-[0.1em]"
                   onMouseEnter={() => setShowForgotTip(true)}
                   onMouseLeave={() => setShowForgotTip(false)}

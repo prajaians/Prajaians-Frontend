@@ -145,11 +145,11 @@
             </div>
             {!sidebarCollapsed && (
                 <div className="flex flex-col">
-                <span className="font-['Playfair_Display',serif] text-xl mt-2 font-bold text-white tracking-wide leading-tight">
-                    Prajain's
+                <span className="font-['Playfair_Display',serif] text-lg ms-1 mt-2 font-bold text-white tracking-wide leading-tight">
+                       PRAJAIAN'S
                 </span>
                 <div className="flex items-center gap-1.5 mt-2">
-                    <span className="text-[9px] font-semibold text-[#c9a962] tracking-[0.2em] uppercase bg-[#c9a962]/8 px-2 py-0.5 rounded-full border border-[#c9a962]/15">
+                    <span className="text-[7px] font-semibold text-[#c9a962] tracking-[0.2em] uppercase bg-[#c9a962]/8 px-2 py-0.5 rounded-full border border-[#c9a962]/15">
                     Control Deck
                     </span>
                     <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
