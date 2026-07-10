@@ -406,6 +406,7 @@ body {
   width: auto;
   object-fit: contain;
   transition: all 0.3s ease;
+  border-radius: 13px;
 }
 
 .logo-img:hover {

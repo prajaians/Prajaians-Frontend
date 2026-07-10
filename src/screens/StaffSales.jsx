@@ -694,22 +694,22 @@ const StaffSales = () => {
             <div>
               <label className="block text-[10px] text-[#8b7355] uppercase tracking-wider mb-1">Month</label>
               <select value={filterMonth} onChange={(e) => setFilterMonth(e.target.value)} disabled={!!filterDate} className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-lg text-white text-sm focus:outline-none focus:border-[#c9a962] disabled:opacity-40">
-                <option value="all">All Months</option>
-                {MONTH_NAMES.map((m, i) => <option key={m} value={i}>{m}</option>)}
+                <option value="all" className='bg-black/50'>All Months</option>
+                {MONTH_NAMES.map((m, i) => <option key={m} value={i} className='bg-black' >{m}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-[10px] text-[#8b7355] uppercase tracking-wider mb-1">Year</label>
               <select value={filterYear} onChange={(e) => setFilterYear(e.target.value)} disabled={!!filterDate} className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-lg text-white text-sm focus:outline-none focus:border-[#c9a962] disabled:opacity-40">
-                <option value="all">All Years</option>
-                {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
+                <option value="all" className='bg-black/50'>All Years</option>
+                {availableYears.map(y => <option key={y} value={y} className='bg-black' >{y}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-[10px] text-[#8b7355] uppercase tracking-wider mb-1">Staff</label>
               <select value={filterStaff} onChange={(e) => setFilterStaff(e.target.value)} className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-lg text-white text-sm focus:outline-none focus:border-[#c9a962]">
-                <option value="all">All Staff</option>
-                {availableStaff.map(name => <option key={name} value={name}>{name}</option>)}
+                <option value="all" className='bg-black/50'>All Staff</option>
+                {availableStaff.map(name => <option key={name} value={name} className='bg-black' >{name} </option>)}
               </select>
             </div>
             {filterDate && (

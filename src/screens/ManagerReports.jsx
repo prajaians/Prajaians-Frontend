@@ -1038,7 +1038,7 @@ const ManagerReports = () => {
                 onChange={(e) => setFilterCategory(e.target.value)}
                 className="px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-lg text-white text-sm focus:outline-none focus:border-[#c9a962] cursor-pointer"
               >
-                <option value="">All Categories</option>
+                <option value="" className='bg-black/50'>All Categories</option>
                 {categories.map((cat) => (
                   <option key={cat} value={cat} className="bg-black">{cat}</option>
                 ))}
@@ -1048,7 +1048,7 @@ const ManagerReports = () => {
                 onChange={(e) => setFilterBrand(e.target.value)}
                 className="px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-lg text-white text-sm focus:outline-none focus:border-[#c9a962] cursor-pointer"
               >
-                <option value="">All Brands</option>
+                <option value="" className='bg-black/50'>All Brands</option>
                 {brands.map((brand) => (
                   <option key={brand} value={brand} className="bg-black">{brand}</option>
                 ))}
@@ -1058,7 +1058,7 @@ const ManagerReports = () => {
                 onChange={(e) => setFilterStatus(e.target.value)}
                 className="px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-lg text-white text-sm focus:outline-none focus:border-[#c9a962] cursor-pointer"
               >
-                <option value="">All Status</option>
+                <option value="" className='bg-black/50'>All Status</option>
                 <option value="In Stock" className="bg-black">In Stock</option>
                 <option value="Low Stock" className="bg-black">Low Stock</option>
                 <option value="Out of Stock" className="bg-black">Out of Stock</option>
