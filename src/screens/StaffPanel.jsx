@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import cafeLogo from '../assets/logo.jpg'
-import DashboardStaff from './DashboardStaff'
+import DashboardStaff from './Dashboardstaff'
 import StaffCategories from './StaffCategories'
 import AddCategory from './AddCategory'
 import EditCategory from './EditCategory'
