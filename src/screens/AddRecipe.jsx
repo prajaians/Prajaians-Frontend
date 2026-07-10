@@ -573,7 +573,7 @@ const AddRecipe = () => {
                           {imageUrl ? (
                             <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0">
                               <img 
-                                src={imageUrl} 
+                                src={ingredient.ingredientImage}
                                 alt={ing.ingredientName} 
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
@@ -671,7 +671,7 @@ const AddRecipe = () => {
                         {item.imageUrl ? (
                           <div className="w-10 h-10 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0">
                             <img 
-                              src={item.imageUrl} 
+                             src={ingredient.ingredientImage}
                               alt={item.ingredientName} 
                               className="w-full h-full object-cover"
                               onError={(e) => {

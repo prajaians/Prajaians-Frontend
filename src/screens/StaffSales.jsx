@@ -897,7 +897,7 @@ const StaffSales = () => {
                                   <td className="py-2.5 px-3">
                                     <div className="flex items-center gap-2">
                                       {imageUrl ? (
-                                        <img src={imageUrl} alt={item.pdfItemName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20 flex-shrink-0" />
+                                        <img src={item.recipeImage} alt={item.pdfItemName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20 flex-shrink-0" />
                                       ) : (
                                         <div className="w-7 h-7 rounded-lg bg-[#1a1510] flex items-center justify-center text-xs text-[#8b7355] flex-shrink-0">🍽️</div>
                                       )}

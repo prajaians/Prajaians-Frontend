@@ -717,7 +717,7 @@ const handleManualSubmit = async () => {
                                 <div>
                                   <div className="flex items-center gap-2">
                                     {imageUrl && (
-                                      <img src={imageUrl} alt={row.recipeName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20 flex-shrink-0" />
+                                      <img src={row.recipeImage} alt={row.recipeName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20 flex-shrink-0" />
                                     )}
                                     <span className={`text-sm ${row.itemName ? 'text-white' : 'text-red-400'}`}>
                                       {row.itemName || 'Empty name'}
@@ -760,7 +760,7 @@ const handleManualSubmit = async () => {
                                             className="px-3 py-2 hover:bg-[#c9a962]/10 cursor-pointer flex items-center gap-3 text-sm text-white"
                                           >
                                             {recipeImageUrl ? (
-                                              <img src={recipeImageUrl} alt={r.recipeName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20 flex-shrink-0" />
+                                              <img src={row.recipeImage} alt={r.recipeName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20 flex-shrink-0" />
                                             ) : (
                                               <div className="w-7 h-7 rounded-lg bg-[#1a1510] flex items-center justify-center text-xs flex-shrink-0">🍳</div>
                                             )}
@@ -905,7 +905,7 @@ const handleManualSubmit = async () => {
                                 return (
                                   <div key={recipe._id} onClick={() => selectRecipeForAddRow(recipe)} className="px-3 py-2 hover:bg-[#c9a962]/10 cursor-pointer flex items-center gap-3">
                                     {imageUrl ? (
-                                      <img src={imageUrl} alt={recipe.recipeName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20" />
+                                      <img src={row.recipeImage} alt={recipe.recipeName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20" />
                                     ) : (
                                       <div className="w-7 h-7 rounded-lg bg-[#1a1510] flex items-center justify-center text-xs">🍳</div>
                                     )}
@@ -980,7 +980,7 @@ const handleManualSubmit = async () => {
                       return (
                         <div key={recipe._id} onClick={() => selectRecipeForManual(recipe)} className="px-4 py-2 hover:bg-[#c9a962]/10 cursor-pointer flex items-center gap-3">
                           {imageUrl ? (
-                            <img src={imageUrl} alt={recipe.recipeName} className="w-8 h-8 rounded-lg object-cover border border-[#c9a962]/20" />
+                            <img src={row.recipeImage} alt={recipe.recipeName} className="w-8 h-8 rounded-lg object-cover border border-[#c9a962]/20" />
                           ) : (
                             <div className="w-8 h-8 rounded-lg bg-[#1a1510] flex items-center justify-center text-sm">🍳</div>
                           )}

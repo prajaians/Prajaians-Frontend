@@ -479,7 +479,7 @@ const AddPurchase = () => {
                       {item.imageUrl ? (
                         <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-lg overflow-hidden border border-[#c9a962]/20">
                           <img 
-                            src={item.imageUrl} 
+                           src={ingredient.ingredientImage}
                             alt="ingredient" 
                             className="w-full h-full object-cover"
                             onError={(e) => {
@@ -511,7 +511,7 @@ const AddPurchase = () => {
                               {imageUrl ? (
                                 <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0">
                                   <img 
-                                    src={imageUrl} 
+                                     src={ingredient.ingredientImage}
                                     alt={ing.ingredientName} 
                                     className="w-full h-full object-cover"
                                     onError={(e) => {
