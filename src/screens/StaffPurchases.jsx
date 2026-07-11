@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import html2pdf from 'html2pdf.js'
 
+const LOGO_URL = 'https://res.cloudinary.com/mddemz67/image/upload/v1783761419/logo_ixcv2j.jpg'
+
 const StaffPurchases = () => {
   const navigate = useNavigate()
   const [purchases, setPurchases] = useState([])
@@ -413,7 +415,8 @@ const StaffPurchases = () => {
 
           <div class="header">
             <div class="header-left">
-<img src="https://prajaians-frontend.vercel.app/src/assets/logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'" />
+           <img src="${LOGO_URL}" alt="Logo" class="logo" />
+
             <div>
                 <div class="brand-name">PRAJAIAN'S Resto-Cafe</div>
                 <div class="brand-sub">Purchase Order</div>
