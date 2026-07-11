@@ -32,8 +32,8 @@ const StaffSales = () => {
   // Get image URL
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null
-    const baseUrl = import.meta.env.VITE_API_URL.replace('/api', '')
-    return `${baseUrl}${imagePath}`
+       return imagePath
+
   }
 
   // Fetch ingredients

@@ -39,8 +39,8 @@ const EditRecipe = ({ id: propId }) => {
   // Get image URL
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null
-    const baseUrl = import.meta.env.VITE_API_URL.replace('/api', '')
-    return `${baseUrl}${imagePath}`
+       return imagePath
+ 
   }
 
   // Helper: Convert to base unit for storage (g, ml, or pcs)

@@ -127,8 +127,8 @@ const ManagerStocks = () => {
   // Get base URL for images
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null
-    const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath
-    return `${import.meta.env.VITE_API_URL.replace('/api', '')}/${cleanPath}`
+        return imagePath
+
   }
 
   // Update batch statuses
