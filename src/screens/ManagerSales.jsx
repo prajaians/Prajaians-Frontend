@@ -5,6 +5,9 @@ import html2pdf from 'html2pdf.js'
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
+const LOGO_URL = 'https://res.cloudinary.com/mddemz67/image/upload/v1783761419/logo_ixcv2j.jpg'
+
+
 const ManagerSales = () => {
   const navigate = useNavigate()
   const [sales, setSales] = useState([])
@@ -354,8 +357,9 @@ const ManagerSales = () => {
 
           <div class="header">
             <div class="header-left">
-              <img src="${window.location.origin}/src/assets/logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'" />
-              <div>
+           <img src="${LOGO_URL}" alt="Logo" class="logo" />
+
+            <div>
                 <div class="brand-name">PRAJAIAN'S Resto-Cafe</div>
                 <div class="brand-sub">Sale #${sale._id?.slice(-8) || 'N/A'}</div>
               </div>
