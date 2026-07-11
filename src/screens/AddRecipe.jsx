@@ -34,8 +34,8 @@ const AddRecipe = () => {
   // Get image URL
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null
-    const baseUrl = import.meta.env.VITE_API_URL.replace('/api', '')
-    return `${baseUrl}${imagePath}`
+      return imagePath
+
   }
 
   // Fetch ingredients (only active ones)
@@ -573,7 +573,7 @@ const AddRecipe = () => {
                           {imageUrl ? (
                             <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0">
                               <img 
-                                src={imageUrl}
+                                src={ing.imageUrl}
                                 alt={ing.ingredientName} 
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
