@@ -573,7 +573,7 @@ const AddRecipe = () => {
                           {imageUrl ? (
                             <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0">
                               <img 
-                                src={ing.imageUrl}
+                                src={imageUrl}
                                 alt={ing.ingredientName} 
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
