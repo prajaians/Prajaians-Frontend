@@ -425,224 +425,225 @@ const AddPurchase = () => {
               <p className="text-xs text-[#8b7355] mt-1">Loading vendors...</p>
             )}
           </div>
+{/* Purchase Items */}
+<div>
+  <label className="block text-sm font-medium text-[#e6dfd5] mb-3">
+    Purchase Items *
+  </label>
 
-          {/* Purchase Items */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <label className="block text-sm font-medium text-[#e6dfd5]">
-                Purchase Items *
-              </label>
-              <button
-                type="button"
-                onClick={addItemRow}
-                className="text-xs text-[#c9a962] hover:text-[#e8d5a3] transition-colors duration-300 cursor-pointer flex items-center gap-1"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                </svg>
-                Add Item
-              </button>
-            </div>
+  {formData.purchaseItems.map((item, index) => (
+    <div key={index} className="bg-white/5 border border-[#c9a962]/10 rounded-xl p-4 mb-4">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-sm font-medium text-[#e6dfd5]">Item {index + 1}</span>
+        <button
+          type="button"
+          onClick={() => removeItemRow(index)}
+          className="text-xs text-red-400 hover:text-red-300 transition-colors duration-300 cursor-pointer"
+        >
+          Remove
+        </button>
+      </div>
 
-            {formData.purchaseItems.map((item, index) => (
-              <div key={index} className="bg-white/5 border border-[#c9a962]/10 rounded-xl p-4 mb-4">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-[#e6dfd5]">Item {index + 1}</span>
-                  <button
-                    type="button"
-                    onClick={() => removeItemRow(index)}
-                    className="text-xs text-red-400 hover:text-red-300 transition-colors duration-300 cursor-pointer"
-                  >
-                    Remove
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Ingredient with Searchable Dropdown */}
-                  <div className="relative" ref={dropdownRef}>
-                    <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
-                      Ingredient *
-                    </label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        value={activeDropdownIndex === index ? ingredientSearch : item.ingredientName || ''}
-                        onChange={(e) => handleIngredientSearch(index, e)}
-                        onFocus={() => {
-                          setShowDropdown(true)
-                          setActiveDropdownIndex(index)
-                          setIngredientSearch('')
-                        }}
-                        placeholder="Search ingredient..."
-                        className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white placeholder-[#998f82]/50 focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm pl-10"
-                      />
-                      {item.imageUrl ? (
-                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-lg overflow-hidden border border-[#c9a962]/20">
-                          <img 
-                           src={item.imageUrl}
-                            alt="ingredient" 
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              e.target.onerror = null
-                              e.target.parentElement.innerHTML = `
-                                <div class="w-full h-full flex items-center justify-center text-[#8b7355] text-xs bg-[#1a1510]">
-                                  🍽️
-                                </div>
-                              `
-                            }}
-                          />
-                        </div>
-                      ) : (
-                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-lg overflow-hidden border border-[#c9a962]/20 bg-[#1a1510] flex items-center justify-center text-[#8b7355] text-xs">
-                          🍽️
-                        </div>
-                      )}
-                    </div>
-                    {showDropdown && activeDropdownIndex === index && filteredIngredients.length > 0 && (
-                      <div className="absolute z-10 w-full mt-1 bg-[#120f0c] border border-[#c9a962]/20 rounded-xl shadow-2xl max-h-56 overflow-y-auto">
-                        {filteredIngredients.map((ing) => {
-                          const imageUrl = ing.ingredientImage ? getImageUrl(ing.ingredientImage) : null
-                          return (
-                            <div
-                              key={ing._id}
-                              onClick={() => selectIngredient(ing, index)}
-                              className="px-4 py-2 hover:bg-[#c9a962]/10 cursor-pointer transition-colors duration-200 flex items-center gap-3"
-                            >
-                              {imageUrl ? (
-                                <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0">
-                                  <img 
-                                     src={imageUrl}
-                                    alt={ing.ingredientName} 
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                      e.target.onerror = null
-                                      e.target.parentElement.innerHTML = `
-                                        <div class="w-full h-full flex items-center justify-center text-[#8b7355] text-sm bg-[#1a1510]">
-                                          🍽️
-                                        </div>
-                                      `
-                                    }}
-                                  />
-                                </div>
-                              ) : (
-                                <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0 bg-[#1a1510] flex items-center justify-center text-[#8b7355] text-sm">
-                                  🍽️
-                                </div>
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <span className="text-white text-sm font-medium block">{ing.ingredientName}</span>
-                                <span className="text-[#8b7355] text-xs">Unit: {ing.unit} | Cost: ₹{ing.costPrice}</span>
-                              </div>
-                            </div>
-                          )
-                        })}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Ingredient with Searchable Dropdown */}
+        <div className="relative" ref={dropdownRef}>
+          <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
+            Ingredient *
+          </label>
+          <div className="relative">
+            <input
+              type="text"
+              value={activeDropdownIndex === index ? ingredientSearch : item.ingredientName || ''}
+              onChange={(e) => handleIngredientSearch(index, e)}
+              onFocus={() => {
+                setShowDropdown(true)
+                setActiveDropdownIndex(index)
+                setIngredientSearch('')
+              }}
+              placeholder="Search ingredient..."
+              className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white placeholder-[#998f82]/50 focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm pl-10"
+            />
+            {item.imageUrl ? (
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-lg overflow-hidden border border-[#c9a962]/20">
+                <img 
+                  src={item.imageUrl}
+                  alt="ingredient" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null
+                    e.target.parentElement.innerHTML = `
+                      <div class="w-full h-full flex items-center justify-center text-[#8b7355] text-xs bg-[#1a1510]">
+                        🍽️
                       </div>
-                    )}
-                    {showDropdown && activeDropdownIndex === index && filteredIngredients.length === 0 && (
-                      <div className="absolute z-10 w-full mt-1 bg-[#120f0c] border border-[#c9a962]/20 rounded-xl shadow-2xl p-4 text-center text-[#8b7355] text-sm">
-                        No ingredients found
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Quantity with Unit Display */}
-                  <div>
-                    <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
-                      Quantity ({item.unit || 'unit'}) *
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="number"
-                        name="quantity"
-                        value={item.quantity}
-                        onChange={(e) => handleItemChange(index, e)}
-                        placeholder="Enter quantity"
-                        className="flex-1 px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white placeholder-[#998f82]/50 focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm"
-                        required
-                        step="0.001"
-                        min="0"
-                      />
-                      <span className="inline-flex items-center px-3 py-2 bg-[#c9a962]/10 border border-[#c9a962]/20 rounded-xl text-[#c9a962] text-sm font-medium whitespace-nowrap min-w-[50px] justify-center">
-                        {item.unit || 'unit'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Unit Cost */}
-                  <div>
-                    <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
-                      Unit Cost (₹) *
-                    </label>
-                    <input
-                      type="number"
-                      name="unitCost"
-                      value={item.unitCost}
-                      onChange={(e) => handleItemChange(index, e)}
-                      placeholder="Auto-filled from ingredient"
-                      className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white placeholder-[#998f82]/50 focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm"
-                      required
-                      step="0.01"
-                      min="0"
-                    />
-                    <p className="text-[10px] text-[#8b7355]/70 mt-1">
-                      Auto-filled when ingredient is selected
-                    </p>
-                  </div>
-
-                  {/* Total Cost (Auto-calculated) */}
-                  <div>
-                    <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
-                      Total Cost (₹)
-                    </label>
-                    <input
-                      type="text"
-                      value={item.totalCost ? `₹${parseInt(item.totalCost)}` : '₹0'}
-                      className="w-full px-3 py-2 bg-[#c9a962]/10 border border-[#c9a962]/20 rounded-xl text-[#c9a962] font-semibold focus:outline-none transition-all duration-300 text-sm cursor-default"
-                      disabled
-                    />
-                  </div>
-
-                  {/* Manufacturing Date */}
-                  <div>
-                    <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
-                      Manufacturing Date *
-                    </label>
-                    <input
-                      type="date"
-                      name="manufacturingDate"
-                      value={item.manufacturingDate}
-                      onChange={(e) => handleItemChange(index, e)}
-                      max={getTodayDate()}
-                      className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm"
-                      required
-                    />
-                    <p className="text-[10px] text-[#8b7355]/70 mt-1">
-                      Can be today or any past date
-                    </p>
-                  </div>
-
-                  {/* Expiry Date - Disabled past dates */}
-                  <div>
-                    <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
-                      Expiry Date *
-                    </label>
-                    <input
-                      type="date"
-                      name="expiryDate"
-                      value={item.expiryDate}
-                      onChange={(e) => handleItemChange(index, e)}
-                      min={getTomorrowDate()}
-                      className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm"
-                      required
-                    />
-                    <p className="text-[10px] text-[#c9a962]/70 mt-1">
-                      Must be after today and after manufacturing date
-                    </p>
-                  </div>
-                </div>
+                    `
+                  }}
+                />
               </div>
-            ))}
+            ) : (
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-lg overflow-hidden border border-[#c9a962]/20 bg-[#1a1510] flex items-center justify-center text-[#8b7355] text-xs">
+                🍽️
+              </div>
+            )}
           </div>
+          {showDropdown && activeDropdownIndex === index && filteredIngredients.length > 0 && (
+            <div className="absolute z-10 w-full mt-1 bg-[#120f0c] border border-[#c9a962]/20 rounded-xl shadow-2xl max-h-56 overflow-y-auto">
+              {filteredIngredients.map((ing) => {
+                const imageUrl = ing.ingredientImage ? getImageUrl(ing.ingredientImage) : null
+                return (
+                  <div
+                    key={ing._id}
+                    onClick={() => selectIngredient(ing, index)}
+                    className="px-4 py-2 hover:bg-[#c9a962]/10 cursor-pointer transition-colors duration-200 flex items-center gap-3"
+                  >
+                    {imageUrl ? (
+                      <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0">
+                        <img 
+                          src={imageUrl}
+                          alt={ing.ingredientName} 
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.onerror = null
+                            e.target.parentElement.innerHTML = `
+                              <div class="w-full h-full flex items-center justify-center text-[#8b7355] text-sm bg-[#1a1510]">
+                                🍽️
+                              </div>
+                            `
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#c9a962]/20 flex-shrink-0 bg-[#1a1510] flex items-center justify-center text-[#8b7355] text-sm">
+                        🍽️
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <span className="text-white text-sm font-medium block">{ing.ingredientName}</span>
+                      <span className="text-[#8b7355] text-xs">Unit: {ing.unit} | Cost: ₹{ing.costPrice}</span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+          {showDropdown && activeDropdownIndex === index && filteredIngredients.length === 0 && (
+            <div className="absolute z-10 w-full mt-1 bg-[#120f0c] border border-[#c9a962]/20 rounded-xl shadow-2xl p-4 text-center text-[#8b7355] text-sm">
+              No ingredients found
+            </div>
+          )}
+        </div>
+
+        {/* Quantity with Unit Display */}
+        <div>
+          <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
+            Quantity ({item.unit || 'unit'}) *
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="number"
+              name="quantity"
+              value={item.quantity}
+              onChange={(e) => handleItemChange(index, e)}
+              placeholder="Enter quantity"
+              className="flex-1 px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white placeholder-[#998f82]/50 focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm"
+              required
+              step="0.001"
+              min="0"
+            />
+            <span className="inline-flex items-center px-3 py-2 bg-[#c9a962]/10 border border-[#c9a962]/20 rounded-xl text-[#c9a962] text-sm font-medium whitespace-nowrap min-w-[50px] justify-center">
+              {item.unit || 'unit'}
+            </span>
+          </div>
+        </div>
+
+        {/* Unit Cost */}
+        <div>
+          <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
+            Unit Cost (₹) *
+          </label>
+          <input
+            type="number"
+            name="unitCost"
+            value={item.unitCost}
+            onChange={(e) => handleItemChange(index, e)}
+            placeholder="Auto-filled from ingredient"
+            className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white placeholder-[#998f82]/50 focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm"
+            required
+            step="0.01"
+            min="0"
+          />
+          <p className="text-[10px] text-[#8b7355]/70 mt-1">
+            Auto-filled when ingredient is selected
+          </p>
+        </div>
+
+        {/* Total Cost (Auto-calculated) */}
+        <div>
+          <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
+            Total Cost (₹)
+          </label>
+          <input
+            type="text"
+            value={item.totalCost ? `₹${parseInt(item.totalCost)}` : '₹0'}
+            className="w-full px-3 py-2 bg-[#c9a962]/10 border border-[#c9a962]/20 rounded-xl text-[#c9a962] font-semibold focus:outline-none transition-all duration-300 text-sm cursor-default"
+            disabled
+          />
+        </div>
+
+        {/* Manufacturing Date */}
+        <div>
+          <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
+            Manufacturing Date *
+          </label>
+          <input
+            type="date"
+            name="manufacturingDate"
+            value={item.manufacturingDate}
+            onChange={(e) => handleItemChange(index, e)}
+            max={getTodayDate()}
+            className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm"
+            required
+          />
+          <p className="text-[10px] text-[#8b7355]/70 mt-1">
+            Can be today or any past date
+          </p>
+        </div>
+
+        {/* Expiry Date - Disabled past dates */}
+        <div>
+          <label className="block text-xs font-medium text-[#e6dfd5] mb-1">
+            Expiry Date *
+          </label>
+          <input
+            type="date"
+            name="expiryDate"
+            value={item.expiryDate}
+            onChange={(e) => handleItemChange(index, e)}
+            min={getTomorrowDate()}
+            className="w-full px-3 py-2 bg-white/5 border border-[#c9a962]/15 rounded-xl text-white focus:outline-none focus:border-[#c9a962] focus:ring-2 focus:ring-[#c9a962]/20 transition-all duration-300 text-sm"
+            required
+          />
+          <p className="text-[10px] text-[#c9a962]/70 mt-1">
+            Must be after today and after manufacturing date
+          </p>
+        </div>
+      </div>
+    </div>
+  ))}
+  
+  {/* ✅ Add Item Button - Bottom of form */}
+  <div className="mt-4 pt-3 border-t border-[#c9a962]/10 flex justify-center">
+    <button
+      type="button"
+      onClick={addItemRow}
+      className="flex items-center gap-2 px-6 py-2.5 bg-[#c9a962]/15 border border-[#c9a962]/30 text-[#c9a962] font-medium rounded-xl hover:bg-[#c9a962]/25 transition-all duration-300 cursor-pointer"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Add Another Item
+    </button>
+  </div>
+</div>
 
           {/* Total Amount */}
           <div className="flex justify-end items-center gap-4 p-4 bg-white/5 rounded-xl border border-[#c9a962]/10">
