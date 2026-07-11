@@ -21,8 +21,7 @@ const StaffPurchases = () => {
   // Get image URL
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null
-    const baseUrl = import.meta.env.VITE_API_URL.replace('/api', '')
-    return `${baseUrl}${imagePath}`
+    return imagePath
   }
 
   // Fetch purchases
@@ -414,8 +413,8 @@ const StaffPurchases = () => {
 
           <div class="header">
             <div class="header-left">
-              <img src="${window.location.origin}/src/assets/logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'" />
-              <div>
+<img src="https://prajaians-frontend.vercel.app/src/assets/logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'" />
+            <div>
                 <div class="brand-name">PRAJAIAN'S Resto-Cafe</div>
                 <div class="brand-sub">Purchase Order</div>
               </div>
