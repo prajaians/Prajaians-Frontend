@@ -32,8 +32,8 @@ const ManagerSales = () => {
   // Get image URL
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null
-    const baseUrl = import.meta.env.VITE_API_URL.replace('/api', '')
-    return `${baseUrl}${imagePath}`
+       return imagePath
+
   }
 
   // Fetch ingredients
@@ -883,7 +883,7 @@ const ManagerSales = () => {
                                   <td className="py-2.5 px-3">
                                     <div className="flex items-center gap-2">
                                       {imageUrl ? (
-                                        <img src={item.recipeImage} alt={item.pdfItemName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20 flex-shrink-0" />
+                                        <img src={imageUrl} alt={item.pdfItemName} className="w-7 h-7 rounded-lg object-cover border border-[#c9a962]/20 flex-shrink-0" />
                                       ) : (
                                         <div className="w-7 h-7 rounded-lg bg-[#1a1510] flex items-center justify-center text-xs text-[#8b7355] flex-shrink-0">🍽️</div>
                                       )}
