@@ -463,7 +463,7 @@ const EditIngredient = ({ id: propId }) => {
               {(imagePreview || currentImage) && (
                 <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-[#c9a962]/30 flex-shrink-0">
                   <img 
-                    src={imagePreview || `${import.meta.env.VITE_API_URL}${currentImage}`} 
+                    src={imagePreview || currentImage} 
                     alt="Preview" 
                     className="w-full h-full object-cover" 
                   />
