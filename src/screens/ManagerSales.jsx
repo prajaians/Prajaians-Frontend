@@ -199,11 +199,12 @@ const ManagerSales = () => {
     return new Date(date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
   }
 
-  const getPdfUrl = (pdfFileName) => {
-    if (!pdfFileName) return null
-    const baseUrl = import.meta.env.VITE_API_URL.replace('/api', '')
-    return `${baseUrl}/sales/${pdfFileName}`
-  }
+  // FIX: same issue as StaffSales.jsx — the PDF lives on Cloudinary
+  // (sales.services.js -> approveSalesPDF saves the Cloudinary secure_url as
+  // pdfFilePath, then deletes the local copy). Rebuilding a URL from
+  // pdfFileName against the Railway backend's local /sales folder 404s,
+  // since that local file no longer exists. Use pdfFilePath directly.
+  const getPdfUrl = (sale) => sale?.pdfFilePath || null
 
   const isRealPdf = (sale) => sale.pdfFileName && !sale.pdfFileName.startsWith('manual_')
 
@@ -753,7 +754,7 @@ const ManagerSales = () => {
             const items = detailsCache[sale._id] || []
             const isLoadingDetails = detailsLoadingId === sale._id
             const detailError = detailsError[sale._id]
-            const pdfUrl = getPdfUrl(sale.pdfFileName)
+            const pdfUrl = getPdfUrl(sale)
             const source = isRealPdf(sale) ? 'PDF' : 'Manual'
 
             return (
