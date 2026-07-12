@@ -401,65 +401,67 @@ const ManagerDashboard = ({ currentUser }) => {
           </button>
         </div>
 
-        <div className="relative z-10 flex flex-col justify-center h-full">
-          {/* Greeting */}
-          <div className="flex items-center gap-2 sm:gap-3 ms-12 mb-1">
-            <span className="text-xs sm:text-sm px-3 sm:px-4  mt-4 font-medium text-emerald-400/80 tracking-wider uppercase">
-              - {getGreeting()} -
-            </span>
-          </div>
-
-          {/* Name with Icon */}
-          <div className="flex items-center gap-3 sm:gap-4 mb-1 sm:mb-2">
-            <div className="relative flex-shrink-0">
-              <div className="absolute inset-0 bg-emerald-500/20 blur-2xl rounded-full"></div>
-              <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10">
-                <Icons.User />
-              </div>
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="flex-1 flex flex-col justify-center">
+            {/* Greeting */}
+            <div className="flex items-center gap-2 sm:gap-3 ms-2 sm:ms-6 md:ms-12 mb-1">
+              <span className="text-xs sm:text-sm px-3 sm:px-4 mt-4 font-medium text-emerald-400/80 tracking-wider uppercase">
+                - {getGreeting()} -
+              </span>
             </div>
-            <span className="text-2xl sm:text-3xl font-['Playfair_Display',serif] text-emerald-300 font-semibold truncate">
-              {managerName}
-            </span>
-          </div>
 
-          {/* Date and Role */}
-          <div className="flex items-center flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2 ms-2">
-            <span className="text-xs sm:text-sm text-emerald-400/60">
-              Prajain's Resto Cafe
-            </span>
-            <span className="w-1 h-1 rounded-full bg-emerald-500/30"></span>
-            <span className="text-xs sm:text-sm text-emerald-400/50 truncate">
-              {formatDate(currentTime)}
-            </span>
-          </div>
-
-          {/* User Badge - Bottom left */}
-          <div className="mt-2 sm:mt-3 md:mt-4 flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-wrap">
-            <span className="text-[10px] sm:text-xs text-emerald-400/40 border border-emerald-500/20 rounded-full px-2 sm:px-3 py-0.5 font-mono truncate max-w-[120px] sm:max-w-[200px]">
-              {managerEmail}
-            </span>
-            <span className="w-px h-3 sm:h-4 bg-emerald-500/20"></span>
-            <span className="text-[8px] sm:text-[10px] font-medium text-emerald-400/60 px-2 sm:px-3 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-1 sm:gap-1.5">
-              <span className="w-0.5 sm:w-1 h-0.5 sm:h-1 rounded-full bg-emerald-400"></span>
-              Manager
-            </span>
-            <span className="text-[8px] sm:text-[10px] font-medium text-emerald-400/40 px-2 sm:px-3 py-0.5 rounded-full bg-emerald-500/5 border border-emerald-500/10">
-              {new Date().getFullYear()}
-            </span>
-          </div>
-        </div>
-
-        {/* Time Card - Bottom Right */}
-        <div className="absolute bottom-3 sm:bottom-4 md:bottom-5 right-3 sm:right-4 md:right-5 z-10">
-          <div className="relative">
-            <div className="absolute inset-0 bg-emerald-500/10 blur-xl rounded-xl"></div>
-            <div className="relative text-right px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-xl border border-emerald-500/20 bg-emerald-950/20">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-emerald-300 tracking-wider">
-                {formatTime(currentTime)}
+            {/* Name with Icon */}
+            <div className="flex items-center gap-3 sm:gap-4 mb-1 sm:mb-2">
+              <div className="relative flex-shrink-0">
+                <div className="absolute inset-0 bg-emerald-500/20 blur-2xl rounded-full"></div>
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10">
+                  <Icons.User />
+                </div>
               </div>
-              <div className="text-[8px] sm:text-[10px] text-emerald-400/50 flex items-center justify-end gap-1 sm:gap-2">
-                <span className="inline-block w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                LIVE · LOCAL TIME
+              <span className="text-2xl sm:text-3xl font-['Playfair_Display',serif] text-emerald-300 font-semibold truncate">
+                {managerName}
+              </span>
+            </div>
+
+            {/* Date and Role */}
+            <div className="flex items-center flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2 ms-2">
+              <span className="text-xs sm:text-sm text-emerald-400/60">
+                Prajain's Resto Cafe
+              </span>
+              <span className="w-1 h-1 rounded-full bg-emerald-500/30"></span>
+              <span className="text-xs sm:text-sm text-emerald-400/50 truncate">
+                {formatDate(currentTime)}
+              </span>
+            </div>
+
+            {/* User Badge - Bottom left */}
+            <div className="mt-2 sm:mt-3 md:mt-4 flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-wrap">
+              <span className="text-[10px] sm:text-xs text-emerald-400/40 border border-emerald-500/20 rounded-full px-2 sm:px-3 py-0.5 font-mono truncate max-w-[120px] sm:max-w-[200px]">
+                {managerEmail}
+              </span>
+              <span className="w-px h-3 sm:h-4 bg-emerald-500/20"></span>
+              <span className="text-[8px] sm:text-[10px] font-medium text-emerald-400/60 px-2 sm:px-3 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-1 sm:gap-1.5">
+                <span className="w-0.5 sm:w-1 h-0.5 sm:h-1 rounded-full bg-emerald-400"></span>
+                Manager
+              </span>
+              <span className="text-[8px] sm:text-[10px] font-medium text-emerald-400/40 px-2 sm:px-3 py-0.5 rounded-full bg-emerald-500/5 border border-emerald-500/10">
+                {new Date().getFullYear()}
+              </span>
+            </div>
+          </div>
+
+          {/* Time Card - stacks below content on mobile, pinned to bottom-right from sm: up */}
+          <div className="mt-4 flex justify-center sm:mt-0 sm:block sm:absolute sm:bottom-4 md:bottom-5 sm:right-4 md:right-5 z-10">
+            <div className="relative">
+              <div className="absolute inset-0 bg-emerald-500/10 blur-xl rounded-xl"></div>
+              <div className="relative text-right px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-xl border border-emerald-500/20 bg-emerald-950/20">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-emerald-300 tracking-wider">
+                  {formatTime(currentTime)}
+                </div>
+                <div className="text-[8px] sm:text-[10px] text-emerald-400/50 flex items-center justify-end gap-1 sm:gap-2">
+                  <span className="inline-block w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  LIVE · LOCAL TIME
+                </div>
               </div>
             </div>
           </div>
