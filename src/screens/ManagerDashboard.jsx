@@ -2,7 +2,100 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-// SVG Icons (keep your existing Icons object here - it's the same)
+// SVG Icons
+const Icons = {
+  User: () => (
+    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    </svg>
+  ),
+  Time: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+  ),
+  Categories: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <rect width="7" height="9" x="3" y="3" rx="1" />
+      <rect width="7" height="5" x="14" y="3" rx="1" />
+      <rect width="7" height="9" x="14" y="10" rx="1" />
+      <rect width="7" height="5" x="3" y="14" rx="1" />
+    </svg>
+  ),
+  Staff: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  ),
+  Recipes: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+      <path d="M6 6h10M6 10h10" />
+    </svg>
+  ),
+  Ingredients: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+    </svg>
+  ),
+  Vendors: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  ),
+  Purchases: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <circle cx="9" cy="21" r="1" />
+      <circle cx="20" cy="21" r="1" />
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+    </svg>
+  ),
+  Edit: () => (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+    </svg>
+  ),
+  Close: () => (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  ),
+  Spinner: () => (
+    <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+    </svg>
+  ),
+  Check: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+    </svg>
+  ),
+  Lock: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  ),
+  Eye: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ),
+  EyeOff: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+      <line x1="1" y1="1" x2="23" y2="23" />
+    </svg>
+  ),
+}
 
 const ManagerDashboard = ({ currentUser }) => {
   const navigate = useNavigate()
@@ -160,6 +253,7 @@ const ManagerDashboard = ({ currentUser }) => {
     if (!profileData.dob) errors.dob = 'Date of birth is required'
     if (!profileData.gender) errors.gender = 'Gender is required'
 
+    // Password validation if password fields are shown
     if (showPasswordFields) {
       if (!profileData.currentPassword) {
         errors.currentPassword = 'Current password is required'
@@ -199,6 +293,7 @@ const ManagerDashboard = ({ currentUser }) => {
         gender: profileData.gender
       }
 
+      // Add password if updating
       if (showPasswordFields) {
         payload.currentPassword = profileData.currentPassword
         payload.newPassword = profileData.newPassword
@@ -211,6 +306,7 @@ const ManagerDashboard = ({ currentUser }) => {
       )
 
       if (response.data.status === 'SUCCESS') {
+        // Update local storage
         const storedUser = JSON.parse(localStorage.getItem('user') || '{}')
         const updatedUser = {
           ...storedUser,
@@ -247,9 +343,10 @@ const ManagerDashboard = ({ currentUser }) => {
   }
 
   return (
-    <div className="w-full max-w-full overflow-x-hidden">
-      {/* Welcome Section - Fixed for mobile */}
-      <div className="relative mb-6 sm:mb-8 p-4 sm:p-6 md:p-8 rounded-2xl min-h-[180px] sm:min-h-[200px] md:min-h-[220px] overflow-hidden bg-gradient-to-br from-emerald-950/40 via-emerald-900/20 to-emerald-950/40 backdrop-blur-xl border border-emerald-500/20 shadow-2xl shadow-emerald-900/20 md:px-14 md:py-10">
+    <div>
+      
+      {/* Welcome Section - Glassmorphic with Grid Lines */}
+      <div className="relative mb-8 p-4 sm:p-6  md:p-8 rounded-2xl min-h-[200px] md:min-h-[220px] overflow-hidden bg-gradient-to-br from-emerald-950/40 via-emerald-900/20 to-emerald-950/40 backdrop-blur-xl border border-emerald-500/20 shadow-2xl shadow-emerald-900/20 md:px-14 md:py-10">
         {/* Grid Lines Background */}
         <div className="absolute inset-0 opacity-[0.08]">
           <div className="w-full h-full" style={{
@@ -273,9 +370,9 @@ const ManagerDashboard = ({ currentUser }) => {
         </div>
 
         {/* Glow Effects */}
-        <div className="absolute top-0 right-0 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-emerald-500/15 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-24 sm:w-36 md:w-48 h-24 sm:h-36 md:h-48 bg-emerald-500/15 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 sm:w-64 md:w-96 h-40 sm:h-64 md:h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-emerald-500/15 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-36 sm:w-48 h-36 sm:h-48 bg-emerald-500/15 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
 
         {/* Decorative Corner Lines */}
         <div className="absolute top-3 sm:top-5 left-3 sm:left-5 w-8 sm:w-12 h-8 sm:h-12 border-t-2 border-l-2 border-emerald-500/25 rounded-tl-xl"></div>
@@ -285,14 +382,14 @@ const ManagerDashboard = ({ currentUser }) => {
         <div className="absolute top-1/2 -right-8 w-16 sm:w-20 h-16 sm:h-20 border border-emerald-500/10 rounded-full -translate-y-1/2"></div>
         <div className="absolute top-1/2 -left-8 w-16 sm:w-20 h-16 sm:h-20 border border-emerald-500/10 rounded-full -translate-y-1/2"></div>
 
-        {/* Profile Badge - Top Right Corner - Fixed positioning */}
-        <div className="absolute top-2 sm:top-3 md:top-5 right-2 sm:right-3 md:right-5 z-20">
+        {/* Profile Badge - Top Right Corner */}
+        <div className="absolute top-3 sm:top-4 md:top-5 right-3 sm:right-4 md:right-5 z-20">
           <button
             type="button"
             onClick={() => setShowProfileModal(true)}
-            className="group flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full hover:bg-emerald-500/20 transition-all duration-300 cursor-pointer"
+            className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full hover:bg-emerald-500/20 transition-all duration-300 cursor-pointer"
           >
-            <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-emerald-600/60 to-emerald-800/60 flex items-center justify-center text-emerald-300 text-[10px] xs:text-xs sm:text-sm font-bold border border-emerald-500/30 flex-shrink-0">
+            <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-emerald-600/60 to-emerald-800/60 flex items-center justify-center text-emerald-300 text-xs sm:text-sm font-bold border border-emerald-500/30 flex-shrink-0">
               {managerName.charAt(0).toUpperCase()}
             </div>
             <span className="hidden xs:inline text-[10px] sm:text-xs font-medium text-emerald-300/70 group-hover:text-emerald-300 transition-colors duration-300">
@@ -304,73 +401,73 @@ const ManagerDashboard = ({ currentUser }) => {
           </button>
         </div>
 
-        <div className="relative z-10 flex flex-col justify-center h-full pr-12 sm:pr-16 md:pr-20">
+        <div className="relative z-10 flex flex-col justify-center h-full">
           {/* Greeting */}
-          <div className="flex items-center gap-2 sm:gap-3 mb-1">
-            <span className="text-[10px] xs:text-xs sm:text-sm px-2 sm:px-3 md:px-4 font-medium text-emerald-400/80 tracking-wider uppercase">
+          <div className="flex items-center gap-2 sm:gap-3 ms-12 mb-1">
+            <span className="text-xs sm:text-sm px-3 sm:px-4  mt-4 font-medium text-emerald-400/80 tracking-wider uppercase">
               - {getGreeting()} -
             </span>
           </div>
 
-          {/* Name with Icon - Fixed for mobile */}
-          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 mb-1 sm:mb-2">
+          {/* Name with Icon */}
+          <div className="flex items-center gap-3 sm:gap-4 mb-1 sm:mb-2">
             <div className="relative flex-shrink-0">
               <div className="absolute inset-0 bg-emerald-500/20 blur-2xl rounded-full"></div>
-              <div className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10">
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10">
                 <Icons.User />
               </div>
             </div>
-            <span className="text-lg sm:text-2xl md:text-3xl font-['Playfair_Display',serif] text-emerald-300 font-semibold truncate max-w-[140px] xs:max-w-[200px] sm:max-w-none">
+            <span className="text-2xl sm:text-3xl font-['Playfair_Display',serif] text-emerald-300 font-semibold truncate">
               {managerName}
             </span>
           </div>
 
-          {/* Date and Role - Fixed for mobile */}
-          <div className="flex items-center flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2">
-            <span className="text-[10px] xs:text-xs sm:text-sm text-emerald-400/60">
+          {/* Date and Role */}
+          <div className="flex items-center flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2 ms-2">
+            <span className="text-xs sm:text-sm text-emerald-400/60">
               Prajain's Resto Cafe
             </span>
-            <span className="w-1 h-1 rounded-full bg-emerald-500/30 hidden xs:block"></span>
-            <span className="text-[10px] xs:text-xs sm:text-sm text-emerald-400/50 truncate max-w-[120px] xs:max-w-none">
+            <span className="w-1 h-1 rounded-full bg-emerald-500/30"></span>
+            <span className="text-xs sm:text-sm text-emerald-400/50 truncate">
               {formatDate(currentTime)}
             </span>
           </div>
 
-          {/* User Badge - Bottom left - Fixed for mobile */}
+          {/* User Badge - Bottom left */}
           <div className="mt-2 sm:mt-3 md:mt-4 flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-wrap">
-            <span className="text-[8px] xs:text-[10px] sm:text-xs text-emerald-400/40 border border-emerald-500/20 rounded-full px-1.5 xs:px-2 sm:px-3 py-0.5 font-mono truncate max-w-[80px] xs:max-w-[120px] sm:max-w-[200px]">
+            <span className="text-[10px] sm:text-xs text-emerald-400/40 border border-emerald-500/20 rounded-full px-2 sm:px-3 py-0.5 font-mono truncate max-w-[120px] sm:max-w-[200px]">
               {managerEmail}
             </span>
-            <span className="w-px h-3 sm:h-4 bg-emerald-500/20 hidden xs:block"></span>
-            <span className="text-[8px] xs:text-[10px] font-medium text-emerald-400/60 px-1.5 xs:px-2 sm:px-3 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-1">
+            <span className="w-px h-3 sm:h-4 bg-emerald-500/20"></span>
+            <span className="text-[8px] sm:text-[10px] font-medium text-emerald-400/60 px-2 sm:px-3 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-1 sm:gap-1.5">
               <span className="w-0.5 sm:w-1 h-0.5 sm:h-1 rounded-full bg-emerald-400"></span>
               Manager
             </span>
-            <span className="text-[8px] xs:text-[10px] font-medium text-emerald-400/40 px-1.5 xs:px-2 sm:px-3 py-0.5 rounded-full bg-emerald-500/5 border border-emerald-500/10 hidden xs:inline-block">
+            <span className="text-[8px] sm:text-[10px] font-medium text-emerald-400/40 px-2 sm:px-3 py-0.5 rounded-full bg-emerald-500/5 border border-emerald-500/10">
               {new Date().getFullYear()}
             </span>
           </div>
         </div>
 
-        {/* Time Card - Bottom Right - Fixed position */}
-        <div className="absolute bottom-2 sm:bottom-3 md:bottom-5 right-2 sm:right-3 md:right-5 z-10">
+        {/* Time Card - Bottom Right */}
+        <div className="absolute bottom-3 sm:bottom-4 md:bottom-5 right-3 sm:right-4 md:right-5 z-10">
           <div className="relative">
             <div className="absolute inset-0 bg-emerald-500/10 blur-xl rounded-xl"></div>
-            <div className="relative text-right px-2 sm:px-3 md:px-6 py-1.5 sm:py-2 md:py-3 rounded-xl border border-emerald-500/20 bg-emerald-950/20">
-              <div className="text-base sm:text-xl md:text-3xl font-bold font-mono text-emerald-300 tracking-wider whitespace-nowrap">
+            <div className="relative text-right px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-xl border border-emerald-500/20 bg-emerald-950/20">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-emerald-300 tracking-wider">
                 {formatTime(currentTime)}
               </div>
-              <div className="text-[6px] xs:text-[8px] sm:text-[10px] text-emerald-400/50 flex items-center justify-end gap-1">
+              <div className="text-[8px] sm:text-[10px] text-emerald-400/50 flex items-center justify-end gap-1 sm:gap-2">
                 <span className="inline-block w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="hidden xs:inline">LIVE ·</span> LOCAL
+                LIVE · LOCAL TIME
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Stats Grid - Fixed for mobile */}
-      <div className="grid grid-cols-2 xs:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
+      {/* Stats Grid - Green Theme */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {[
           { label: 'Total Staff', value: stats.totalStaff, icon: <Icons.Staff /> },
           { label: 'Categories', value: stats.totalCategories, icon: <Icons.Categories /> },
@@ -381,18 +478,19 @@ const ManagerDashboard = ({ currentUser }) => {
         ].map((stat, index) => (
           <div
             key={index}
-            className="group relative bg-emerald-950/30 border border-emerald-500/15 rounded-xl p-2 sm:p-3 md:p-4 text-center hover:border-emerald-500/30 transition-all duration-300 hover:bg-emerald-950/40 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/10 overflow-hidden"
+            className="group relative bg-emerald-950/30 border border-emerald-500/15 rounded-xl p-3 sm:p-4 text-center hover:border-emerald-500/30 transition-all duration-300 hover:bg-emerald-950/40 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/10 overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-8 sm:w-12 md:w-16 h-8 sm:h-12 md:h-16 bg-emerald-500/10 rounded-full blur-xl"></div>
+            {/* Subtle Green Glow */}
+            <div className="absolute top-0 right-0 w-12 sm:w-16 h-12 sm:h-16 bg-emerald-500/10 rounded-full blur-xl"></div>
             
             <div className="relative">
-              <div className="text-emerald-400/70 group-hover:text-emerald-300 transition-colors duration-300 mb-0.5 flex justify-center">
+              <div className="text-emerald-400/70 group-hover:text-emerald-300 transition-colors duration-300 mb-0.5 sm:mb-1 flex justify-center">
                 {stat.icon}
               </div>
-              <p className="text-base sm:text-lg md:text-xl font-bold text-emerald-300 group-hover:text-emerald-200 transition-colors duration-300">
+              <p className="text-lg sm:text-xl font-bold text-emerald-300 group-hover:text-emerald-200 transition-colors duration-300">
                 {loading ? '...' : stat.value}
               </p>
-              <p className="text-[6px] xs:text-[8px] sm:text-[10px] font-medium text-emerald-400/50 uppercase tracking-wider mt-0.5">
+              <p className="text-[8px] sm:text-[10px] font-medium text-emerald-400/50 uppercase tracking-wider mt-0.5">
                 {stat.label}
               </p>
             </div>
@@ -400,11 +498,10 @@ const ManagerDashboard = ({ currentUser }) => {
         ))}
       </div>
 
-      {/* Profile Modal - Keep your existing modal code */}
+      {/* Profile Edit Modal with Password Update and Show/Hide */}
       {showProfileModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-[#120f0c] border border-emerald-500/20 rounded-2xl p-4 sm:p-6 md:p-8 w-full max-w-2xl shadow-2xl my-4">
-            {/* Modal content - keep your existing code */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className="bg-[#120f0c] border border-emerald-500/20 rounded-2xl p-4 sm:p-6 md:p-8 w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4 sm:mb-6">
               <div>
                 <h3 className="text-xl sm:text-2xl font-['Playfair_Display',serif] text-emerald-300">
@@ -427,6 +524,7 @@ const ManagerDashboard = ({ currentUser }) => {
               </button>
             </div>
 
+            {/* Decorative Divider */}
             <div className="flex items-center gap-4 mb-4 sm:mb-6">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-emerald-500/30"></div>
               <span className="text-[10px] font-extrabold tracking-[0.3em] uppercase text-emerald-300 bg-emerald-500/10 px-3 sm:px-4 py-1 rounded-full border border-emerald-500/20">
@@ -562,7 +660,7 @@ const ManagerDashboard = ({ currentUser }) => {
                       <p className="text-xs text-emerald-400/50 mb-3">Enter your current password and set a new one</p>
                     </div>
 
-                    {/* Current Password */}
+                    {/* Current Password with Show/Hide */}
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-[#e6dfd5] mb-1.5">
                         Current Password <span className="text-emerald-400">*</span>
@@ -591,7 +689,7 @@ const ManagerDashboard = ({ currentUser }) => {
                       )}
                     </div>
 
-                    {/* New Password */}
+                    {/* New Password with Show/Hide */}
                     <div>
                       <label className="block text-sm font-medium text-[#e6dfd5] mb-1.5">
                         New Password <span className="text-emerald-400">*</span>
@@ -620,7 +718,7 @@ const ManagerDashboard = ({ currentUser }) => {
                       )}
                     </div>
 
-                    {/* Confirm Password */}
+                    {/* Confirm Password with Show/Hide */}
                     <div>
                       <label className="block text-sm font-medium text-[#e6dfd5] mb-1.5">
                         Confirm New Password <span className="text-emerald-400">*</span>
@@ -652,6 +750,7 @@ const ManagerDashboard = ({ currentUser }) => {
                 )}
               </div>
 
+              {/* Success Message */}
               {profileSuccess && (
                 <div className="mt-4 sm:mt-5 p-3 sm:p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-sm flex items-center gap-2">
                   <Icons.Check />
@@ -659,12 +758,14 @@ const ManagerDashboard = ({ currentUser }) => {
                 </div>
               )}
 
+              {/* Error Message */}
               {profileError && (
                 <div className="mt-4 sm:mt-5 p-3 sm:p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm">
                   {profileError}
                 </div>
               )}
 
+              {/* Action Buttons */}
               <div className="flex items-center gap-3 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-emerald-500/10">
                 <button
                   type="submit"

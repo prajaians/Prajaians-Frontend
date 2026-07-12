@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-// SVG Icons (keep your existing Icons object)
+// SVG Icons
 const Icons = {
   User: () => (
     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +61,7 @@ const AdminDashboard = ({ currentUser }) => {
     return () => clearInterval(timer)
   }, [])
 
-  // Check server status
+  // Check server status on load - using an existing endpoint
   useEffect(() => {
     const checkServer = async () => {
       try {
@@ -90,7 +90,7 @@ const AdminDashboard = ({ currentUser }) => {
   const adminName = currentUser?.name || currentUser?.admin?.name || 'Admin'
   const adminEmail = currentUser?.email || currentUser?.admin?.email || 'admin@email.com'
 
-  // Get greeting
+  // Get greeting based on time
   const getGreeting = () => {
     const hour = currentTime.getHours()
     if (hour < 12) return 'Good Morning'
@@ -134,9 +134,10 @@ const AdminDashboard = ({ currentUser }) => {
   }
 
   return (
-    <div className="w-full max-w-full overflow-x-hidden">
-      {/* Welcome Section - Fixed for mobile */}
-      <div className="relative mb-6 sm:mb-8 p-4 sm:p-6 md:p-8 rounded-2xl min-h-[180px] sm:min-h-[200px] md:min-h-[220px] overflow-hidden bg-gradient-to-br from-red-950/15 via-red-900/15 to-red-950/15 backdrop-blur-xl border border-red-500/20 shadow-2xl shadow-red-900/10 md:px-14 md:py-10">
+    <div>
+      {/* Welcome Section - Dark Red Theme */}
+      <div className="relative mb-8 p-4 sm:p-6 md:p-8 rounded-2xl min-h-[200px] md:min-h-[220px] overflow-hidden bg-gradient-to-br from-red-950/15 via-red-900/15 to-red-950/15 backdrop-blur-xl border border-red-500/20 shadow-2xl shadow-red-900/10 md:px-14 md:py-10">
+        
         {/* Grid Lines Background */}
         <div className="absolute inset-0 opacity-[0.09]">
           <div className="w-full h-full" style={{
@@ -160,9 +161,9 @@ const AdminDashboard = ({ currentUser }) => {
         </div>
 
         {/* Glow Effects - Dark Red */}
-        <div className="absolute top-0 right-0 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-red-500/15 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-24 sm:w-36 md:w-48 h-24 sm:h-36 md:h-48 bg-red-500/15 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 sm:w-64 md:w-96 h-40 sm:h-64 md:h-96 bg-red-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-red-500/15 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-36 sm:w-48 h-36 sm:h-36 bg-red-500/15 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-red-500/5 rounded-full blur-3xl"></div>
 
         {/* Decorative Corner Lines - Dark Red */}
         <div className="absolute top-3 sm:top-5 left-3 sm:left-5 w-8 sm:w-12 h-8 sm:h-12 border-t-2 border-l-2 border-red-500/25 rounded-tl-xl"></div>
@@ -172,105 +173,107 @@ const AdminDashboard = ({ currentUser }) => {
         <div className="absolute top-1/2 -right-8 w-16 sm:w-20 h-16 sm:h-20 border border-red-500/10 rounded-full -translate-y-1/2"></div>
         <div className="absolute top-1/2 -left-8 w-16 sm:w-20 h-16 sm:h-20 border border-red-500/10 rounded-full -translate-y-1/2"></div>
 
-        <div className="relative z-10 flex flex-col justify-center h-full pr-12 sm:pr-16 md:pr-20">
+        <div className="relative z-10 flex flex-col justify-center h-full">
           {/* Greeting */}
-          <div className="flex items-center gap-2 sm:gap-3 mb-1">
-            <span className="text-[10px] xs:text-xs sm:text-sm px-2 sm:px-3 md:px-4 font-medium text-red-400/80 tracking-wider uppercase">
+          <div className="flex items-center gap-2 sm:gap-3 ms-12 mb-1">
+            <span className="text-xs sm:text-sm px-3 sm:px-4 mt-4 font-medium text-red-400/80 tracking-wider uppercase">
               - {getGreeting()} -
             </span>
           </div>
 
-          {/* Name with Icon - Fixed for mobile */}
-          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 mb-1 sm:mb-2">
+          {/* Name with Icon */}
+          <div className="flex items-center gap-3 sm:gap-4 mb-1 sm:mb-2">
             <div className="relative flex-shrink-0">
               <div className="absolute inset-0 bg-red-500/20 blur-2xl rounded-full"></div>
-              <div className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-2xl bg-red-500/20 border border-red-500/30 flex items-center justify-center shadow-lg shadow-red-500/10">
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-red-500/20 border border-red-500/30 flex items-center justify-center shadow-lg shadow-red-500/10">
                 <Icons.User />
               </div>
             </div>
-            <span className="text-lg sm:text-2xl md:text-3xl font-['Playfair_Display',serif] text-red-300 font-semibold truncate max-w-[140px] xs:max-w-[200px] sm:max-w-none">
+            <span className="text-2xl sm:text-3xl font-['Playfair_Display',serif] text-red-300 font-semibold truncate">
               {adminName}
             </span>
           </div>
 
-          {/* Date and Role - Fixed for mobile */}
-          <div className="flex items-center flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2">
-            <span className="text-[10px] xs:text-xs sm:text-sm text-red-400/60">
+          {/* Date and Role */}
+          <div className="flex items-center flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2 ms-2">
+            <span className="text-xs sm:text-sm text-red-400/60">
               Prajain's Resto Cafe
             </span>
-            <span className="w-1 h-1 rounded-full bg-red-500/30 hidden xs:block"></span>
-            <span className="text-[10px] xs:text-xs sm:text-sm text-red-400/50 truncate max-w-[120px] xs:max-w-none">
+            <span className="w-1 h-1 rounded-full bg-red-500/30"></span>
+            <span className="text-xs sm:text-sm text-red-400/50 truncate">
               {formatDate(currentTime)}
             </span>
           </div>
 
-          {/* User Badge - Bottom left - Fixed for mobile */}
+          {/* User Badge - Bottom left */}
           <div className="mt-2 sm:mt-3 md:mt-4 flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-wrap">
-            <span className="text-[8px] xs:text-[10px] sm:text-xs text-red-400/40 border border-red-500/20 rounded-full px-1.5 xs:px-2 sm:px-3 py-0.5 font-mono truncate max-w-[80px] xs:max-w-[120px] sm:max-w-[200px]">
+            <span className="text-[10px] sm:text-xs text-red-400/40 border border-red-500/20 rounded-full px-2 sm:px-3 py-0.5 font-mono truncate max-w-[120px] sm:max-w-[200px]">
               {adminEmail}
             </span>
-            <span className="w-px h-3 sm:h-4 bg-red-500/20 hidden xs:block"></span>
-            <span className="text-[8px] xs:text-[10px] font-medium text-red-400/60 px-1.5 xs:px-2 sm:px-3 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 flex items-center gap-1">
+            <span className="w-px h-3 sm:h-4 bg-red-500/20"></span>
+            <span className="text-[8px] sm:text-[10px] font-medium text-red-400/60 px-2 sm:px-3 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 flex items-center gap-1 sm:gap-1.5">
               <span className="w-0.5 sm:w-1 h-0.5 sm:h-1 rounded-full bg-red-400"></span>
-              Admin
+              Administrator
             </span>
-            <span className="text-[8px] xs:text-[10px] font-medium text-red-400/40 px-1.5 xs:px-2 sm:px-3 py-0.5 rounded-full bg-red-500/5 border border-red-500/10 hidden xs:inline-block">
+            <span className="text-[8px] sm:text-[10px] font-medium text-red-400/40 px-2 sm:px-3 py-0.5 rounded-full bg-red-500/5 border border-red-500/10">
               {new Date().getFullYear()}
             </span>
           </div>
         </div>
 
-        {/* Time Card - Bottom Right - Fixed position */}
-        <div className="absolute bottom-2 sm:bottom-3 md:bottom-5 right-2 sm:right-3 md:right-5 z-10">
+        {/* Time Card - Bottom Right */}
+        <div className="absolute bottom-3 sm:bottom-4 md:bottom-9 right-3 sm:right-4 md:right-10  z-10">
           <div className="relative">
             <div className="absolute inset-0 bg-red-500/10 blur-xl rounded-xl"></div>
-            <div className="relative text-right px-2 sm:px-3 md:px-6 py-1.5 sm:py-2 md:py-3 rounded-xl border border-red-500/20 bg-red-950/20">
-              <div className="text-base sm:text-xl md:text-3xl font-bold font-mono text-red-300 tracking-wider whitespace-nowrap">
+            <div className="relative text-right px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-xl border border-red-500/20 bg-red-950/20">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-red-300 tracking-wider">
                 {formatTime(currentTime)}
               </div>
-              <div className="text-[6px] xs:text-[8px] sm:text-[10px] text-red-400/50 flex items-center justify-end gap-1">
+              <div className="text-[8px] sm:text-[10px] text-red-400/50 flex items-center justify-end gap-1 sm:gap-2">
                 <span className="inline-block w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-red-400 animate-pulse"></span>
-                <span className="hidden xs:inline">LIVE ·</span> LOCAL
+                LIVE · LOCAL TIME
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Status Cards - Fixed for mobile */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+      {/* Status Cards - Admin Access & Server Status */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Admin Access Card */}
-        <div className="group relative bg-gradient-to-br from-red-950/30 to-red-900/20 border border-red-500/20 rounded-2xl p-4 sm:p-6 md:p-8 hover:border-red-500/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/10 overflow-hidden">
+        <div className="group relative bg-gradient-to-br from-red-950/30 to-red-900/20 border border-red-500/20 rounded-2xl p-6 sm:p-8 hover:border-red-500/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/10 overflow-hidden">
+          {/* Animated background glow */}
           <div className="absolute -inset-1 bg-gradient-to-r from-red-500/0 via-red-500/5 to-red-500/0 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl" />
           
-          <div className="relative flex items-center gap-3 sm:gap-4 md:gap-6">
+          <div className="relative flex items-center gap-4 sm:gap-6">
             <div className="relative flex-shrink-0">
               <div className="absolute inset-0 bg-red-500/20 blur-2xl rounded-full"></div>
-              <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-600/10 border border-red-500/30 flex items-center justify-center shadow-lg shadow-red-500/10">
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-600/10 border border-red-500/30 flex items-center justify-center shadow-lg shadow-red-500/10">
                 <Icons.AdminAccess />
               </div>
+              {/* Pulse ring */}
               <div className="absolute -inset-2 rounded-2xl border border-red-500/20 animate-pulse opacity-50"></div>
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center flex-wrap gap-1 sm:gap-2">
-                <h3 className="text-base sm:text-lg md:text-xl font-['Playfair_Display',serif] text-red-300 font-semibold">
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h3 className="text-lg sm:text-xl font-['Playfair_Display',serif] text-red-300 font-semibold">
                   Admin Access
                 </h3>
-                <span className="flex items-center gap-1 px-1.5 xs:px-2 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-[8px] xs:text-[10px] text-emerald-400 font-medium whitespace-nowrap">
+                <span className="flex items-center gap-1 px-2 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-[10px] text-emerald-400 font-medium">
                   <Icons.CheckCircle className="w-3 h-3" />
                   Active
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-red-400/60 mt-1">
+              <p className="text-sm text-red-400/60 mt-1">
                 Full Administration
               </p>
-              <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-3 text-[10px] xs:text-xs text-red-400/40 flex-wrap">
-                <span className="flex items-center gap-1">
-                  <Icons.Shield className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <div className="flex items-center gap-3 mt-3 text-xs text-red-400/40">
+                <span className="flex items-center gap-1.5">
+                  <Icons.Shield className="w-3.5 h-3.5" />
                   Root Access
                 </span>
-                <span className="w-px h-3 bg-red-500/20 hidden xs:block"></span>
-                <span className="flex items-center gap-1">
+                <span className="w-px h-3 bg-red-500/20"></span>
+                <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                   Verified
                 </span>
@@ -280,23 +283,25 @@ const AdminDashboard = ({ currentUser }) => {
         </div>
 
         {/* Server Status Card */}
-        <div className="group relative bg-gradient-to-br from-red-950/30 to-red-900/20 border border-red-500/20 rounded-2xl p-4 sm:p-6 md:p-8 hover:border-red-500/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/10 overflow-hidden">
+        <div className="group relative bg-gradient-to-br from-red-950/30 to-red-900/20 border border-red-500/20 rounded-2xl p-6 sm:p-8 hover:border-red-500/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/10 overflow-hidden">
+          {/* Animated background glow */}
           <div className="absolute -inset-1 bg-gradient-to-r from-red-500/0 via-red-500/5 to-red-500/0 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl" />
           
-          <div className="relative flex items-center gap-3 sm:gap-4 md:gap-6">
+          <div className="relative flex items-center gap-4 sm:gap-6">
             <div className="relative flex-shrink-0">
               <div className="absolute inset-0 bg-red-500/20 blur-2xl rounded-full"></div>
-              <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-600/10 border border-red-500/30 flex items-center justify-center shadow-lg shadow-red-500/10">
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-600/10 border border-red-500/30 flex items-center justify-center shadow-lg shadow-red-500/10">
                 <Icons.Server />
               </div>
+              {/* Pulse ring */}
               <div className="absolute -inset-2 rounded-2xl border border-red-500/20 animate-pulse opacity-50"></div>
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center flex-wrap gap-1 sm:gap-2">
-                <h3 className="text-base sm:text-lg md:text-xl font-['Playfair_Display',serif] text-red-300 font-semibold">
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h3 className="text-lg sm:text-xl font-['Playfair_Display',serif] text-red-300 font-semibold">
                   Server Status
                 </h3>
-                <span className={`flex items-center gap-1 px-1.5 xs:px-2 py-0.5 rounded-full text-[8px] xs:text-[10px] font-medium whitespace-nowrap ${
+                <span className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${
                   serverStatus === 'online' 
                     ? 'bg-emerald-500/20 border border-emerald-500/30 text-emerald-400'
                     : 'bg-red-500/20 border border-red-500/30 text-red-400'
@@ -307,21 +312,21 @@ const AdminDashboard = ({ currentUser }) => {
                   {serverStatus === 'online' ? 'Online' : 'Offline'}
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-red-400/60 mt-1">
+              <p className="text-sm text-red-400/60 mt-1">
                 {serverStatus === 'online' 
                   ? 'Server Running'
                   : 'Server connection lost'
                 }
               </p>
-              <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-3 text-[10px] xs:text-xs text-red-400/40 flex-wrap">
-                <span className="flex items-center gap-1">
+              <div className="flex items-center gap-3 mt-3 text-xs text-red-400/40">
+                <span className="flex items-center gap-1.5">
                   <span className={`w-1.5 h-1.5 rounded-full ${
                     serverStatus === 'online' ? 'bg-emerald-400' : 'bg-red-400'
                   }`} />
                   {serverStatus === 'online' ? 'Connected' : 'Disconnected'}
                 </span>
-                <span className="w-px h-3 bg-red-500/20 hidden xs:block"></span>
-                <span className="flex items-center gap-1">
+                <span className="w-px h-3 bg-red-500/20"></span>
+                <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-red-400/50"></span>
                   v{new Date().getFullYear()}.0
                 </span>
