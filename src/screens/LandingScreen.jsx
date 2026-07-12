@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/LandingStyles.css';
 import cafeLogo from '../assets/logo.jpg';
@@ -15,6 +15,53 @@ import video1 from '../assets/Chocolate Lava.mov';
 import video2 from '../assets/Dynamite (Beef)French Fries.mp4';
 import video3 from '../assets/Chicken Tikka .mp4';
 
+// Lazy-load a video only once its container scrolls near the viewport.
+// This stops every <video> on the page from fighting the hero video for
+// bandwidth on first paint, which is what causes the "slow load / needs a
+// hard refresh" symptom on a fresh (uncached) visit.
+const useLazyVideoSrc = (src, rootMargin = '300px') => {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return undefined;
+
+    if (typeof IntersectionObserver === 'undefined') {
+      // Fallback for very old browsers: just load it.
+      setShouldLoad(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldLoad(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [rootMargin]);
+
+  useEffect(() => {
+    if (shouldLoad && videoRef.current) {
+      // Autoplay can be blocked until the source is actually attached;
+      // nudge playback once the video is ready to load.
+      const playPromise = videoRef.current.play();
+      if (playPromise) playPromise.catch(() => {});
+    }
+  }, [shouldLoad]);
+
+  return { containerRef, videoRef, src: shouldLoad ? src : undefined };
+};
+
 const LandingScreen = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,6 +71,10 @@ const LandingScreen = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState(null);
+
+  const foodVideo1 = useLazyVideoSrc(video1);
+  const foodVideo2 = useLazyVideoSrc(video2);
+  const foodVideo3 = useLazyVideoSrc(video3);
 
   useEffect(() => {
     setLoaded(true);
@@ -231,26 +282,20 @@ const LandingScreen = () => {
             <h2 className="section-title">Signature <span>Dishes</span></h2>
           </div>
           <div className="food-video-grid">
-            <div className="food-video-card">
-              <video autoPlay muted loop playsInline preload="auto">
-                <source src={video1} type="video/mp4" />
-              </video>
+            <div className="food-video-card" ref={foodVideo1.containerRef}>
+              <video ref={foodVideo1.videoRef} autoPlay muted loop playsInline preload="none" src={foodVideo1.src} />
               <div className="food-video-overlay">
                 <span>Chocolate Lava</span>
               </div>
             </div>
-            <div className="food-video-card">
-              <video autoPlay muted loop playsInline preload="auto">
-                <source src={video2} type="video/mp4" />
-              </video>
+            <div className="food-video-card" ref={foodVideo2.containerRef}>
+              <video ref={foodVideo2.videoRef} autoPlay muted loop playsInline preload="none" src={foodVideo2.src} />
               <div className="food-video-overlay">
                 <span>Dynamite Fries</span>
               </div>
             </div>
-            <div className="food-video-card">
-              <video autoPlay muted loop playsInline preload="auto">
-                <source src={video3} type="video/mp4" />
-              </video>
+            <div className="food-video-card" ref={foodVideo3.containerRef}>
+              <video ref={foodVideo3.videoRef} autoPlay muted loop playsInline preload="none" src={foodVideo3.src} />
               <div className="food-video-overlay">
                 <span>Chicken Tikka</span>
               </div>
