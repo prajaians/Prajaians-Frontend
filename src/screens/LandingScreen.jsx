@@ -1,19 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/LandingStyles.css';
-import cafeLogo from '../assets/logo.jpg';
-import cafe1 from '../assets/cafe1.jpeg';
-import cafe2 from '../assets/cafe2.jpeg';
-import cafe3 from '../assets/cafe3.jpeg';
-import cafe4 from '../assets/cafe4.jpeg';
-import cafe5 from '../assets/cafe5.jpeg';
-import cafe6 from '../assets/cafe6.jpeg';
-import cafe7 from '../assets/cafe7.jpeg';
-import cafe8 from '../assets/cafe8.jpeg';
-import cafe9 from '../assets/cafe9.jpeg';
-import video1 from '../assets/Chocolate Lava.mov';
-import video2 from '../assets/Dynamite (Beef)French Fries.mp4';
-import video3 from '../assets/Chicken Tikka .mp4';
+
+// Cloudinary CDN assets — f_auto,q_auto lets Cloudinary auto-pick the best
+// format (WebP/AVIF for images, VP9/H.265 for video) and compression for
+// each visitor's browser, which is why these load fast in production
+// instead of shipping the original heavy .jpeg/.mov files.
+const cafeLogo = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875610/logo_n8wr9w.jpg';
+const cafe1 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875595/cafe1_pgpxym.jpg';
+const cafe2 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875595/cafe2_lic9is.jpg';
+const cafe3 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875595/cafe3_jsjdn1.jpg';
+const cafe4 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875595/cafe4_tuihln.jpg';
+const cafe5 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875595/cafe5_dbod0q.jpg';
+const cafe6 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875595/cafe6_et1xmo.jpg';
+const cafe7 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875596/cafe7_rtlfce.jpg';
+const cafe8 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875595/cafe8_j72lj6.jpg';
+const cafe9 = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875595/cafe9_nlz1mb.jpg';
+const managerAvatar = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q_auto/v1783875599/manager_avatar_ceiris.jpg';
+
+// Videos: f_auto,q_auto again for adaptive codec/bitrate. w_1280 caps the
+// hero/grid videos at a sane delivery width so Cloudinary doesn't stream
+// full source resolution to a small on-screen player.
+const video1 = 'https://res.cloudinary.com/mddemz67/video/upload/f_auto,q_auto,w_1280/v1783875612/Chocolate_Lava_cfstxl.mov';
+const video2 = 'https://res.cloudinary.com/mddemz67/video/upload/f_auto,q_auto,w_1280/v1783875609/Dynamite_Beef_French_Fries_zrsu66.mp4';
+const video3 = 'https://res.cloudinary.com/mddemz67/video/upload/f_auto,q_auto,w_1280/v1783875599/Chicken_Tikka_q8wx9h.mp4';
 
 const LandingScreen = () => {
   const navigate = useNavigate();
