@@ -21,7 +21,7 @@ const managerAvatar = 'https://res.cloudinary.com/mddemz67/image/upload/f_auto,q
 // Videos: f_auto,q_auto again for adaptive codec/bitrate. w_1280 caps the
 // hero/grid videos at a sane delivery width so Cloudinary doesn't stream
 // full source resolution to a small on-screen player.
-const video1 = 'https://res.cloudinary.com/mddemz67/video/upload/f_auto,q_auto,w_1280/v1783875612/Chocolate_Lava_cfstxl.mp4';
+const video1 = 'https://res.cloudinary.com/mddemz67/video/upload/v1783877337/Chocolate_Lava_mgfpic.mp4';
 const video2 = 'https://res.cloudinary.com/mddemz67/video/upload/f_auto,q_auto,w_1280/v1783875609/Dynamite_Beef_French_Fries_zrsu66.mp4';
 const video3 = 'https://res.cloudinary.com/mddemz67/video/upload/f_auto,q_auto,w_1280/v1783875599/Chicken_Tikka_q8wx9h.mp4';
 
