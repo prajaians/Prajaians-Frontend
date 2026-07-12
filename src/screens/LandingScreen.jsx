@@ -202,7 +202,7 @@ const LandingScreen = () => {
 
           <div className="nav-actions">
             <button className="btn-login" onClick={handleLoginClick}>
-              SignIn
+              Sign In
             </button>
             <button className="btn-reserve" onClick={() => scrollToSection('contact')}>
               Reserve Table
