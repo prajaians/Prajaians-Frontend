@@ -174,7 +174,9 @@ const StaffStock = () => {
     try {
       const token = localStorage.getItem('token')
       
-      await updateBatchStatuses()
+      // Note: viewStock already refreshes batch statuses server-side,
+      // so we don't call updateBatchStatuses() separately here anymore —
+      // doing both caused overlapping DB transactions and race-condition failures.
       
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/staff/viewStock`,

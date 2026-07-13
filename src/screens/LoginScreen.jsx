@@ -107,10 +107,11 @@ const LoginScreen = () => {
         localStorage.removeItem('rememberEmail')
       }
 
-      // Update batch statuses after successful login (for staff users)
-      if (user.role === 'staff' || user.role === 'manager' || user.role === 'admin') {
-        await updateBatchStatuses(token)
-      }
+      // Note: batch statuses are refreshed automatically when the stock
+      // page loads (viewStock does this server-side), so we no longer
+      // call updateBatchStatuses() here — doing it in both places caused
+      // two near-simultaneous DB transactions on the same records, which
+      // MongoDB rejected as a write conflict and surfaced as a login-adjacent failure.
 
       // Redirect based on role
       if (user.role === 'staff') {
