@@ -32,17 +32,22 @@ const LoginScreen = () => {
   }, [])
 
   // Update batch statuses after login
-  const updateBatchStatuses = async (token) => {
+  const updateBatchStatuses = async (token, role) => {
     try {
+      // staff and manager each have their own route for this;
+      // there's no admin equivalent, so skip the call for admin.
+      if (role !== 'staff' && role !== 'manager') return null
+
       const response = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/staff/updateBatchStatus`,
+        `${import.meta.env.VITE_API_URL}/${role}/updateBatchStatus`,
         {},
         { headers: { token } }
       )
       console.log('Batch statuses updated on login:', response.data)
       return response.data
     } catch (err) {
-      // Silently fail - don't block login if batch update fails
+      // Silently fail - don't block login if batch update fails.
+      // The stock page will refresh statuses on its own via viewStock anyway.
       console.warn('Failed to update batch statuses:', err.message)
       return null
     }
@@ -107,11 +112,11 @@ const LoginScreen = () => {
         localStorage.removeItem('rememberEmail')
       }
 
-      // Note: batch statuses are refreshed automatically when the stock
-      // page loads (viewStock does this server-side), so we no longer
-      // call updateBatchStatuses() here — doing it in both places caused
-      // two near-simultaneous DB transactions on the same records, which
-      // MongoDB rejected as a write conflict and surfaced as a login-adjacent failure.
+      // Refresh batch statuses right away on login (staff/manager only —
+      // safely no-ops for admin, and silently ignores failure so it can
+      // never block navigation; the stock page refreshes again on its own
+      // when it loads, so this is just for immediate freshness).
+      await updateBatchStatuses(token, user.role)
 
       // Redirect based on role
       if (user.role === 'staff') {
