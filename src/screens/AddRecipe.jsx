@@ -230,12 +230,12 @@ const AddRecipe = () => {
   }
 
   // Select ingredient from dropdown
-  const selectIngredient = (ingredient) => {
-    setCurrentIngredient(prev => ({
-      ...prev,
-      ingredientId: ingredient._id,
-      unit: ingredient.unit === 'pcs' ? 'pcs' : 'g'
-    }))
+const selectIngredient = (ingredient) => {
+  setCurrentIngredient(prev => ({
+    ...prev,
+    ingredientId: ingredient._id,
+    unit: getBaseUnit(ingredient.unit)
+  }))
     setIngredientSearch(ingredient.ingredientName)
     setShowDropdown(false)
     if (error) setError('')
